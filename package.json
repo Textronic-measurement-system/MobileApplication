@@ -14,6 +14,7 @@
     "dependencies": {
         "@native-base/icons": "^0.0.11",
         "@react-navigation/native": "^6.1.6",
+        "@react-navigation/native-stack": "^6.9.12",
         "base-64": "^1.0.0",
         "eslint-config-prettier": "^8.7.0",
         "eslint-import-resolver-typescript": "^3.5.3",
