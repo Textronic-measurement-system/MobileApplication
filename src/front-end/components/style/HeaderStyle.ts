@@ -24,5 +24,6 @@ export const headerComponent = StyleSheet.create({
         fontSize: 32,
         paddingTop: '3%',
         textAlign: 'center',
+        fontWeight: 'bold',
     },
 });
