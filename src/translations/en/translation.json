@@ -4,5 +4,8 @@
         "welcome2": "TEXTRONIC APP",
         "description": "© 2023 Piotr Sarna",
         "button": "GET STARTED"
-    }
+    },
+    "DevicesListScreen": {
+        "title": "Device list",
+    },
 }

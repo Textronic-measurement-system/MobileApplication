@@ -1,8 +1,10 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
+const screen_width = Dimensions.get('window').width;
 
 export const welcomeScreen = StyleSheet.create({
     container: {
         flex: 1,
+        width: screen_width,
         backgroundColor: 'rgba(0,0,0, 0.42)',
         alignItems: 'center',
         justifyContent: 'flex-end',
@@ -32,7 +34,6 @@ export const welcomeScreen = StyleSheet.create({
         paddingTop: '5%',
     },
     text2: {
-        bottom: '0%',
         color: 'rgb(245,245,245)',
         fontSize: 12,
     },

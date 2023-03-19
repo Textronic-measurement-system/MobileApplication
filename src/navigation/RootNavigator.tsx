@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Example from '../front-end/screens/Example';
 import { WelcomeScreen } from '../front-end/screens/WelcomeScreen';
+import { DevicesList } from '../front-end/screens/DevicesListScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -13,6 +14,11 @@ export const RootNavigator = function (): JSX.Element {
                 name="Root"
                 component={WelcomeScreen}
                 options={{ title: 'Welcome Screen' }}
+            />
+            <Stack.Screen
+                name="DevicesList"
+                component={DevicesList}
+                options={{ title: 'Devices List Screen' }}
             />
         </Stack.Navigator>
     );
