@@ -1,6 +1,8 @@
 {
     "WelcomeScreen": {
-        "welcome": "Welcome",
-        "description": "© 2023 Piotr Sarna"
+        "welcome1": "WELCOME IN",
+        "welcome2": "TEXTRONIC APP",
+        "description": "© 2023 Piotr Sarna",
+        "button": "GET STARTED"
     }
 }
