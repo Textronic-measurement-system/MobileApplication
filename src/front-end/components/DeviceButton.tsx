@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-    Button,
-    Text,
-    View,
-} from 'native-base';
+import { Button, Text, View } from 'native-base';
 import { device_buttonComponent } from './style/DeviceButtonStyle';
 
 interface Props {
@@ -11,19 +7,22 @@ interface Props {
     goto: any;
     name: React.ReactNode;
     id: React.ReactNode;
+    onPress: any;
 }
 
 export const DeviceButton = function ({
     navigation,
     goto,
     name,
-id,
+    id,
+    onPress,
 }: Props): JSX.Element {
     return (
         <View style={device_buttonComponent.container}>
             <Button
                 style={device_buttonComponent.button}
-                onPress={() => navigation.navigate(goto)}>
+                onPressIn={onPress}
+                onPressOut={() => navigation.navigate(goto)}>
                 <Text style={device_buttonComponent.text}>{name}</Text>
             </Button>
         </View>

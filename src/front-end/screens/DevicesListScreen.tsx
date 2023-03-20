@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import {
     Box,
     NativeBaseProvider,
-    Text,
     View,
     ScrollView,
     FlatList,
@@ -13,7 +12,7 @@ import { Header } from '../components/Header';
 import { DeviceButton } from '../components/DeviceButton';
 import { devices_listScreen } from './style/DevicesListScreenStyle';
 
-import { ConnectionPriority, Device, DeviceId } from 'react-native-ble-plx';
+import { Device, DeviceId } from 'react-native-ble-plx';
 import { requestPermission } from '../../back-end/bluetooth/BLEFunctions';
 import {
     CharacteristicsUUIDs,
@@ -28,6 +27,44 @@ export const DevicesList = function ({ navigation }: any): JSX.Element {
     const [, setLogCount] = useState(0);
     const [, setDeviceCount] = useState<DeviceId | string>('0');
     const [scannedDevices, setScannedDevices] = useState<Device[]>([]);
+
+    async function BLE_Button() {
+        const btState = await manager.state();
+        if (btState !== 'PoweredOn') {
+            return false;
+        }
+        const permission = await requestPermission();
+        if (permission) {
+            manager.startDeviceScan(
+                null,
+                { allowDuplicates: false },
+                async (error, Device) => {
+                    if (Device) {
+                        const newScannedDevices = scannedDevices;
+                        newScannedDevices[Device.id as any] = Device;
+                        await setDeviceCount(
+                            Object.keys(newScannedDevices).length as any,
+                        );
+                        await setScannedDevices(scannedDevices);
+                    } else if (error) {
+                        return;
+                    }
+                },
+            );
+        }
+        return true;
+    }
+
+    useEffect(() => {
+        const timerWrite1 = setInterval(() => {
+            if (globalThis.Search === 'enable') {
+                BLE_Button();
+            }
+        }, 500);
+        return () => {
+            clearInterval(timerWrite1);
+        };
+    }, []);
 
     useEffect(() => {
         manager.onStateChange(() => {
@@ -65,6 +102,7 @@ export const DevicesList = function ({ navigation }: any): JSX.Element {
                             characteristics[i].uuid ===
                             CharacteristicsUUIDs.COM_TX
                         ) {
+                            globalThis.Search = 'Disable';
                             manager.stopDeviceScan();
                             (globalThis as any).deviceID = id;
                             (globalThis as any).deviceName = name;
@@ -93,27 +131,21 @@ export const DevicesList = function ({ navigation }: any): JSX.Element {
                     title={t('DevicesListScreen.title')}
                 />
                 <Box style={devices_listScreen.box}>
-                    <ScrollView style={devices_listScreen.scroll}>
-                        <DeviceButton
-                            navigation={navigation}
-                            goto={''}
-                            name={'abadsasdsadsadssdasdla'}
-                            id={'tasat'}
-                        />
+                    <ScrollView
+                        nestedScrollEnabled={true}
+                        style={devices_listScreen.scroll}>
                         <FlatList
                             data={Object.values(scannedDevices)}
                             renderItem={({ item }) => {
                                 if (item.name != null) {
                                     return (
-                                        <Text
-                                            onPress={() =>
-                                                handleDeviceConnection(
-                                                    (item as any).id,
-                                                    (item as any).name,
-                                                )
-                                            }>
-                                            {`${item.name} (${item.id})`}
-                                        </Text>
+                                        <DeviceButton
+                                            navigation={navigation}
+                                            goto={''}
+                                            name={`${item.name}`}
+                                            id={`${item.id}`}
+                                            onPress={handleDeviceConnection}
+                                        />
                                     );
                                 }
                             }}

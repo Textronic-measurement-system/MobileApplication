@@ -17,6 +17,7 @@ export const devices_listScreen = StyleSheet.create({
         bottom: '3%',
     },
     scroll: {
+        width: '100%',
         marginTop: '2%',
         marginBottom: '7%',
     },
