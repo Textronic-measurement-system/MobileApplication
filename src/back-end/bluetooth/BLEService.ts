@@ -13,13 +13,16 @@ export enum BTStatus {
     PAIRING = 'PAIRING',
 }
 
-export enum ServiceUUIDs {}
-// ADD UUID FOR SERVICE?SERVER
-// VSP = '569a1101-b87f-490c-92cb-11ba5ea5167d',
+export enum ServiceUUIDs {
+    VSP = '0000181A-0000-1000-8000-00805F9B34FB',
+}
 
-export enum CharacteristicsUUIDs {}
-// ADD UUID FOR CHARACTERISTICS
-// COM_TX = '569a2000-b87f-490c-92cb-11ba5ea5167d',
+export enum CharacteristicsUUIDs {
+    COM_TX = '0000FF04-0000-1000-8000-00805F9B34FB',
+    COM_R = '0000FF03-0000-1000-8000-00805F9B34FB',
+    COM_Z = '0000FF01-0000-1000-8000-00805F9B34FB',
+    CONFIG = '0000FF02-0000-1000-8000-00805F9B34FB',
+}
 
 export const getBluetoothState = async (): Promise<State> => {
     return await manager.state();

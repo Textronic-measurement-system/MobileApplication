@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Text, View } from 'native-base';
+import { Button, NativeBaseProvider, Text, View } from 'native-base';
 import { device_buttonComponent } from './style/DeviceButtonStyle';
 
 interface Props {
@@ -18,13 +18,15 @@ export const DeviceButton = function ({
     onPress,
 }: Props): JSX.Element {
     return (
-        <View style={device_buttonComponent.container}>
-            <Button
-                style={device_buttonComponent.button}
-                onPressIn={onPress}
-                onPressOut={() => navigation.navigate(goto)}>
-                <Text style={device_buttonComponent.text}>{name}</Text>
-            </Button>
-        </View>
+        <NativeBaseProvider>
+            <View style={device_buttonComponent.container}>
+                <Button
+                    style={device_buttonComponent.button}
+                    onPressIn={onPress}
+                    onPressOut={() => navigation.navigate(goto)}>
+                    <Text style={device_buttonComponent.text}>{name}</Text>
+                </Button>
+            </View>
+        </NativeBaseProvider>
     );
 };

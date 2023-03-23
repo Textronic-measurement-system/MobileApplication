@@ -7,6 +7,7 @@ import {
     ScrollView,
     FlatList,
     Center,
+    Button,
 } from 'native-base';
 
 import { Header } from '../components/Header';
@@ -20,6 +21,7 @@ import {
     manager,
     ServiceUUIDs,
 } from '../../back-end/bluetooth/BLEService';
+import { deviceID } from '../../back-end/global';
 
 export const DevicesList = function ({ navigation }: any): JSX.Element {
     const { t } = useTranslation();
@@ -28,6 +30,18 @@ export const DevicesList = function ({ navigation }: any): JSX.Element {
     const [, setLogCount] = useState(0);
     const [, setDeviceCount] = useState<DeviceId | string>('0');
     const [scannedDevices, setScannedDevices] = useState<Device[]>([]);
+
+    useEffect(() => {
+        manager.onStateChange(() => {
+            const subscription = manager.onStateChange(async () => {
+                const newLogData = logData;
+                await setLogCount(newLogData.length);
+                await setLogData(newLogData);
+                subscription.remove();
+            }, true);
+            return () => subscription.remove();
+        });
+    }, []);
 
     async function BLE_Button() {
         const btState = await manager.state();
@@ -68,18 +82,6 @@ export const DevicesList = function ({ navigation }: any): JSX.Element {
         };
     }, []);
 
-    useEffect(() => {
-        manager.onStateChange(() => {
-            const subscription = manager.onStateChange(async () => {
-                const newLogData = logData;
-                await setLogCount(newLogData.length);
-                await setLogData(newLogData);
-                subscription.remove();
-            }, true);
-            return () => subscription.remove();
-        });
-    }, []);
-
     const handleDeviceConnection = async (id: DeviceId, name: Device) => {
         try {
             manager.stopDeviceScan();
@@ -104,7 +106,6 @@ export const DevicesList = function ({ navigation }: any): JSX.Element {
                             characteristics[i].uuid ===
                             CharacteristicsUUIDs.COM_TX
                         ) {
-                            globalThis.Search = 'Disable';
                             manager.stopDeviceScan();
                             (globalThis as any).deviceID = id;
                             (globalThis as any).deviceName = name;
@@ -144,10 +145,18 @@ export const DevicesList = function ({ navigation }: any): JSX.Element {
                                         return (
                                             <DeviceButton
                                                 navigation={navigation}
-                                                goto={''}
+                                                goto={'DeviceMenu'}
                                                 name={`${item.name}`}
                                                 id={`${item.id}`}
-                                                onPress={handleDeviceConnection}
+                                                onPress={() => {
+                                                    handleDeviceConnection(
+                                                        (item as any).id,
+                                                        (item as any).name,
+                                                    ).catch((err) => {
+                                                        console.log(err);
+                                                        return;
+                                                    });
+                                                }}
                                             />
                                         );
                                     }
