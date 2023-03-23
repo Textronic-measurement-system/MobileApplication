@@ -6,6 +6,6 @@
         "button": "GET STARTED"
     },
     "DevicesListScreen": {
-        "title": "Device list",
-    },
+        "title": "Device list"
+    }
 }

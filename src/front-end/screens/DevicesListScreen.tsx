@@ -6,6 +6,7 @@ import {
     View,
     ScrollView,
     FlatList,
+    Center,
 } from 'native-base';
 
 import { Header } from '../components/Header';
@@ -52,6 +53,7 @@ export const DevicesList = function ({ navigation }: any): JSX.Element {
                 },
             );
         }
+        globalThis.Search = 'disable';
         return true;
     }
 
@@ -134,22 +136,24 @@ export const DevicesList = function ({ navigation }: any): JSX.Element {
                     <ScrollView
                         nestedScrollEnabled={true}
                         style={devices_listScreen.scroll}>
-                        <FlatList
-                            data={Object.values(scannedDevices)}
-                            renderItem={({ item }) => {
-                                if (item.name != null) {
-                                    return (
-                                        <DeviceButton
-                                            navigation={navigation}
-                                            goto={''}
-                                            name={`${item.name}`}
-                                            id={`${item.id}`}
-                                            onPress={handleDeviceConnection}
-                                        />
-                                    );
-                                }
-                            }}
-                        />
+                        <Center>
+                            <FlatList
+                                data={Object.values(scannedDevices)}
+                                renderItem={({ item }) => {
+                                    if (item.name != null) {
+                                        return (
+                                            <DeviceButton
+                                                navigation={navigation}
+                                                goto={''}
+                                                name={`${item.name}`}
+                                                id={`${item.id}`}
+                                                onPress={handleDeviceConnection}
+                                            />
+                                        );
+                                    }
+                                }}
+                            />
+                        </Center>
                     </ScrollView>
                 </Box>
             </View>
