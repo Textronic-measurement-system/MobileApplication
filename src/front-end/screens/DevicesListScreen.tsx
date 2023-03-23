@@ -101,17 +101,11 @@ export const DevicesList = function ({ navigation }: any): JSX.Element {
                     console.log('characteristics:');
                     for (let i = 0; i < characteristics.length; i++) {
                         console.log(characteristics[i].uuid);
-
-                        if (
-                            characteristics[i].uuid ===
-                            CharacteristicsUUIDs.COM_TX
-                        ) {
-                            manager.stopDeviceScan();
-                            (globalThis as any).deviceID = id;
-                            (globalThis as any).deviceName = name;
-                            navigation.navigate('DataScreen');
-                        }
                     }
+                    manager.stopDeviceScan();
+                    (globalThis as any).deviceID = id;
+                    (globalThis as any).deviceName = name;
+                    navigation.navigate('DeviceMenu');
                 })
                 .catch((err) => {
                     setDeviceCount('');
