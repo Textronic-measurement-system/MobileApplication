@@ -1,6 +1,11 @@
 {
     "WelcomeScreen": {
-        "welcome": "Witaj",
-        "description": "© 2023 Piotr Sarna"
+        "welcome1": "WITAMY W APLIKACJI",
+        "welcome2": "TEKSTRONICZNEJ",
+        "description": "© 2023 Piotr Sarna",
+        "button": "ROZPOCZNIJ"
+    },
+    "DevicesListScreen": {
+        "title": "Lista urządzeń"
     }
 }

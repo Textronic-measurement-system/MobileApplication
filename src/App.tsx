@@ -7,6 +7,7 @@ import { LogBox } from 'react-native';
 
 export default function App(): JSX.Element {
     LogBox.ignoreLogs(['NativeEventEmitter']);
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
     return (
         <NativeBaseProvider>
             <NavigationContainer>

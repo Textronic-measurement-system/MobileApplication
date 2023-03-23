@@ -3,6 +3,7 @@ declare global {
     var deviceName: string;
     var value: string;
     var RX_value: string;
+    var Search: string;
 }
 
 export {};
