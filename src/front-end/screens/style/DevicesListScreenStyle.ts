@@ -11,8 +11,7 @@ export const devices_listScreen = StyleSheet.create({
     box: {
         height: '84%',
         width: '92%',
-        backgroundColor: 'rgb(196,196,196)',
-        alignItems: 'center',
+        backgroundColor: 'rgb(146,180,156)',
         borderRadius: 50,
         bottom: '3%',
     },

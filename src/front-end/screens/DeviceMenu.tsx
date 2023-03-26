@@ -1,134 +1,78 @@
-import React, { useState, useEffect } from 'react';
-import { Button, NativeBaseProvider, Text, View } from 'native-base';
-
+import React from 'react';
 import {
-    manager,
-    ServiceUUIDs,
-    CharacteristicsUUIDs,
-} from '../../back-end/bluetooth/BLEService';
+    Box,
+    Button,
+    HStack,
+    NativeBaseProvider,
+    Text,
+    View,
+} from 'native-base';
+import { useTranslation } from 'react-i18next';
+import { manager } from '../../back-end/bluetooth/BLEService';
+import { device_menuScreen } from './style/DeviceMenuStyle';
+import { Header } from '../components/Header';
+import { valueType } from '../../back-end/global';
 
 export const DeviceMenu = function ({ navigation }: any): JSX.Element {
-    const id = globalThis.deviceID;
-    const base64 = require('base-64');
-    const [COMX, setCOMX] = useState('');
-    const [COMR, setCOMR] = useState('');
-    const [COMZ, setCOMZ] = useState('');
-    const [CONFIG, setCONFIG] = useState('');
+    const { t } = useTranslation();
 
     const handleDisconnectDevice = async () => {
         await manager.cancelDeviceConnection((globalThis as any).deviceID);
         return navigation.navigate('DevicesList');
     };
 
-    const handleReadCOMX = async () => {
-        try {
-            await manager.monitorCharacteristicForDevice(
-                id,
-                ServiceUUIDs.VSP,
-                CharacteristicsUUIDs.COM_X,
-                (error, characteristic) => {
-                    if (error) {
-                        console.log(error);
-                    }
-                    setCOMX({
-                        ...(COMX as any),
-                        value: base64.decode(characteristic.value),
-                    });
-                },
-                'COM_X',
-            );
-        } catch (e) {
-            return false;
-        }
+    const handleValueOne = () => {
+        globalThis.valueType = '1';
+        return navigation.navigate('DataScreen');
     };
 
-    const handleReadCOMR = async () => {
-        try {
-            await manager.monitorCharacteristicForDevice(
-                id,
-                ServiceUUIDs.VSP,
-                CharacteristicsUUIDs.COM_R,
-                (error, characteristic) => {
-                    if (error) {
-                        console.log(error);
-                    }
-                    setCOMR({
-                        ...(COMR as any),
-                        value: base64.decode(characteristic.value),
-                    });
-                },
-                'COM_R',
-            );
-        } catch (e) {
-            return false;
-        }
+    const handleValueTwo = () => {
+        globalThis.valueType = '2';
+        return navigation.navigate('DataScreen');
     };
 
-    const handleReadCOMZ = async () => {
-        try {
-            await manager.monitorCharacteristicForDevice(
-                id,
-                ServiceUUIDs.VSP,
-                CharacteristicsUUIDs.COM_Z,
-                (error, characteristic) => {
-                    if (error) {
-                        console.log(error);
-                    }
-                    setCOMZ({
-                        ...(COMZ as any),
-                        value: base64.decode(characteristic.value),
-                    });
-                },
-                'COM_Z',
-            );
-        } catch (e) {
-            return false;
-        }
+    const handleValueThree = () => {
+        globalThis.valueType = '3';
+        return navigation.navigate('DataScreen');
     };
-
-    const handleReadCONFIG = async () => {
-        try {
-            await manager.monitorCharacteristicForDevice(
-                id,
-                ServiceUUIDs.VSP,
-                CharacteristicsUUIDs.CONFIG,
-                (error, characteristic) => {
-                    if (error) {
-                        console.log(error);
-                    }
-                    setCONFIG({
-                        ...(CONFIG as any),
-                        value: base64.decode(characteristic.value),
-                    });
-                },
-                'CONFIG',
-            );
-        } catch (e) {
-            return false;
-        }
-    };
-
-    const ReadFourCharacteristics = async () => {
-        await handleReadCOMX();
-        await handleReadCOMR();
-        await handleReadCOMZ();
-        await handleReadCONFIG();
-    };
-
-    useEffect(() => {
-        const timerWrite = setTimeout(() => {
-            ReadFourCharacteristics();
-        }, 1);
-        return () => clearTimeout(timerWrite);
-    }, []);
 
     return (
         <NativeBaseProvider>
-            <View>
-                <Text>{(COMX as any).value}</Text>
-                <Text>{(COMR as any).value}</Text>
-                <Text>{(COMZ as any).value}</Text>
-                <Button onPress={handleDisconnectDevice}>Disconnected</Button>
+            <View style={device_menuScreen.container}>
+                <Header
+                    navigation={navigation}
+                    goto={'DeviceMenu'}
+                    refreshing={'disconnect'}
+                    title={t('DeviceMenuScreen.title')}
+                />
+                <Box style={device_menuScreen.box}>
+                    <HStack space={'5%'}>
+                        <Button style={device_menuScreen.button} onPress={handleValueOne}>
+                            <Text style={device_menuScreen.text}>
+                                {t('DeviceMenuScreen.value1')}
+                            </Text>
+                        </Button>
+                        <Button style={device_menuScreen.button} onPress={handleValueTwo}>
+                            <Text style={device_menuScreen.text}>
+                                {t('DeviceMenuScreen.value2')}
+                            </Text>
+                        </Button>
+                    </HStack>
+                    <HStack space={'5%'}>
+                        <Button style={device_menuScreen.button} onPress={handleValueThree}>
+                            <Text style={device_menuScreen.text}>
+                                {t('DeviceMenuScreen.value3')}
+                            </Text>
+                        </Button>
+                        <Button
+                            style={device_menuScreen.button}
+                            onPress={handleDisconnectDevice}>
+                            <Text style={device_menuScreen.text}>
+                                {t('DeviceMenuScreen.disconnected')}
+                            </Text>
+                        </Button>
+                    </HStack>
+                </Box>
             </View>
         </NativeBaseProvider>
     );

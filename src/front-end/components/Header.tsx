@@ -9,7 +9,7 @@ import {
     View,
 } from 'native-base';
 import { headerComponent } from './style/HeaderStyle';
-import { BLE_Button } from '../screens/DevicesListScreen';
+import { manager } from '../../back-end/bluetooth/BLEService';
 
 interface Props {
     navigation: any;
@@ -38,13 +38,26 @@ export const Header = function ({
         }
     };
 
+    const handleDisconnectDevice = async () => {
+        await manager.cancelDeviceConnection((globalThis as any).deviceID);
+        return navigation.navigate('DevicesList');
+    };
+
+    const DisconnectButton = (value: any) => {
+        if (value === 'disconnect') {
+            handleDisconnectDevice(value);
+        } else {
+            navigation.navigate(goto);
+        }
+    };
+
     return (
         <NativeBaseProvider>
             <View style={headerComponent.container}>
                 <HStack>
                     <Button
                         style={headerComponent.button1}
-                        onPress={() => navigation.navigate(goto)}>
+                        onPress={() => DisconnectButton(refreshing)}>
                         <ChevronLeftIcon size="8" color={'rgb(0, 0, 0)'} />
                     </Button>
                     {RefreshButton(refreshing)}

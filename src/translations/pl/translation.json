@@ -7,5 +7,12 @@
     },
     "DevicesListScreen": {
         "title": "Lista urządzeń"
+    },
+    "DeviceMenuScreen": {
+        "title": "Menu",
+        "disconnected": "Rozłącz się",
+        "value1": "Wartość 1",
+        "value2": "Wartość 2",
+        "value3": "Wartość 3",
     }
 }

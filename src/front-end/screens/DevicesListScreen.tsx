@@ -7,7 +7,6 @@ import {
     ScrollView,
     FlatList,
     Center,
-    Button,
 } from 'native-base';
 
 import { Header } from '../components/Header';
@@ -16,12 +15,7 @@ import { devices_listScreen } from './style/DevicesListScreenStyle';
 
 import { Device, DeviceId } from 'react-native-ble-plx';
 import { requestPermission } from '../../back-end/bluetooth/BLEFunctions';
-import {
-    CharacteristicsUUIDs,
-    manager,
-    ServiceUUIDs,
-} from '../../back-end/bluetooth/BLEService';
-import { deviceID } from '../../back-end/global';
+import { manager, ServiceUUIDs } from '../../back-end/bluetooth/BLEService';
 
 export const DevicesList = function ({ navigation }: any): JSX.Element {
     const { t } = useTranslation();
