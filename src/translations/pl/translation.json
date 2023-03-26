@@ -14,5 +14,9 @@
         "value1": "Wartość 1",
         "value2": "Wartość 2",
         "value3": "Wartość 3",
+    },
+    "DataScreen": {
+        "title": "Wyniki",
+        "button": "Rozpocznij czytanie wartości"
     }
 }

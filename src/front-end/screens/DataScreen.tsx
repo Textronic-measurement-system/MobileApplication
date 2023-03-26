@@ -5,8 +5,10 @@ import {
     ServiceUUIDs,
     CharacteristicsUUIDs,
 } from '../../back-end/bluetooth/BLEService';
-import { Box, NativeBaseProvider, Text, View } from 'native-base';
+import { Box, Button, NativeBaseProvider, Text, View } from 'native-base';
 import { Header } from '../components/Header';
+import { dataScreen } from './style/DataScreenStyle';
+
 export const DataScreen = function ({ navigation }: any): JSX.Element {
     const { t } = useTranslation();
 
@@ -16,6 +18,7 @@ export const DataScreen = function ({ navigation }: any): JSX.Element {
     const [COMR, setCOMR] = useState('');
     const [COMZ, setCOMZ] = useState('');
     const [CONFIG, setCONFIG] = useState('');
+    var test = 'null';
 
     const handleReadCOMX = async () => {
         try {
@@ -106,9 +109,23 @@ export const DataScreen = function ({ navigation }: any): JSX.Element {
     };
 
     const ReadThreeCharacteristics = async () => {
-        await handleReadCOMX();
-        await handleReadCOMR();
-        await handleReadCOMZ();
+        if (globalThis.valueType === '1') {
+            await handleReadCOMX();
+        } else if (globalThis.valueType === '2') {
+            await handleReadCOMR();
+        } else if (globalThis.valueType === '3') {
+            await handleReadCOMZ();
+        }
+    };
+
+    const DisplayValue = () => {
+        if (globalThis.valueType === '1') {
+            return COMX.value;
+        } else if (globalThis.valueType === '2') {
+            return COMR.value;
+        } else if (globalThis.valueType === '3') {
+            return COMZ.value;
+        }
     };
 
     useEffect(() => {
@@ -120,10 +137,20 @@ export const DataScreen = function ({ navigation }: any): JSX.Element {
 
     return (
         <NativeBaseProvider>
-            <View>
-                <Header navigation={navigation} goto={''} refreshing={'disable'} title={'hello'} />
-                <Box>
-                    <Text>dasdhj</Text>
+            <View style={dataScreen.container}>
+                <Header
+                    navigation={navigation}
+                    goto={'DeviceMenu'}
+                    refreshing={'disable'}
+                    title={t('DataScreen.title')}
+                />
+                <Box style={dataScreen.box}>
+                    <Text style={dataScreen.text1}>{DisplayValue}</Text>
+                    <Button style={dataScreen.button}>
+                        <Text style={dataScreen.text2}>
+                            {t('DataScreen.button')}
+                        </Text>
+                    </Button>
                 </Box>
             </View>
         </NativeBaseProvider>
