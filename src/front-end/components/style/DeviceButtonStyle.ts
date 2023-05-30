@@ -16,7 +16,7 @@ export const device_buttonComponent = StyleSheet.create({
         backgroundColor: 'rgb(94,157,117)',
     },
     text: {
-        color: 'rgb(0,0,0)',
+        color: 'rgb(245,245,245)',
         fontSize: 20,
     },
 });

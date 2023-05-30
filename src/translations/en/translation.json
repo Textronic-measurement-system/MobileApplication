@@ -11,8 +11,11 @@
     "DeviceMenuScreen": {
         "title": "Device menu",
         "disconnected": "Disconnected",
-        "value1": "Value 1",
-        "value2": "Value 2",
-        "value3": "Value 3"
+        "value1": "Display data",
+    },
+    "DataScreen": {
+        "title": "Results",
+        "button": "Start read value",
+        "button1": "Start write value",
     }
 }

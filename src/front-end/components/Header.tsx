@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
     Button,
     ChevronLeftIcon,
@@ -32,7 +32,7 @@ export const Header = function ({
         if (value === 'enable') {
             return (
                 <Button style={headerComponent.button2} onPress={EnableSerach}>
-                    <SearchIcon size="8" color={'rgb(0, 0, 0)'} />
+                    <SearchIcon size="8" color={'rgb(245,245,245)'} />
                 </Button>
             );
         }
@@ -45,7 +45,7 @@ export const Header = function ({
 
     const DisconnectButton = (value: any) => {
         if (value === 'disconnect') {
-            handleDisconnectDevice(value);
+            handleDisconnectDevice();
         } else {
             navigation.navigate(goto);
         }
@@ -58,7 +58,7 @@ export const Header = function ({
                     <Button
                         style={headerComponent.button1}
                         onPress={() => DisconnectButton(refreshing)}>
-                        <ChevronLeftIcon size="8" color={'rgb(0, 0, 0)'} />
+                        <ChevronLeftIcon size="8" color={'rgb(245,245,245)'} />
                     </Button>
                     {RefreshButton(refreshing)}
                 </HStack>

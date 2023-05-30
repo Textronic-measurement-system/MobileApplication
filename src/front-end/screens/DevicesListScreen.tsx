@@ -15,7 +15,11 @@ import { devices_listScreen } from './style/DevicesListScreenStyle';
 
 import { Device, DeviceId } from 'react-native-ble-plx';
 import { requestPermission } from '../../back-end/bluetooth/BLEFunctions';
-import { manager, ServiceUUIDs } from '../../back-end/bluetooth/BLEService';
+import {
+    manager,
+    ServiceUUIDs,
+    CharacteristicsUUIDs,
+} from '../../back-end/bluetooth/BLEService';
 
 export const DevicesList = function ({ navigation }: any): JSX.Element {
     const { t } = useTranslation();
@@ -45,20 +49,20 @@ export const DevicesList = function ({ navigation }: any): JSX.Element {
         const permission = await requestPermission();
         if (permission) {
             manager.startDeviceScan(
-                null,
-                { allowDuplicates: false },
-                async (error, Device) => {
-                    if (Device) {
-                        const newScannedDevices = scannedDevices;
-                        newScannedDevices[Device.id as any] = Device;
-                        await setDeviceCount(
-                            Object.keys(newScannedDevices).length as any,
-                        );
-                        await setScannedDevices(scannedDevices);
-                    } else if (error) {
-                        return;
-                    }
-                },
+              null,
+              { allowDuplicates: false },
+              async (error, Device) => {
+                  if (Device) {
+                      const newScannedDevices = scannedDevices;
+                      newScannedDevices[Device.id as any] = Device;
+                      await setDeviceCount(
+                        Object.keys(newScannedDevices).length as any,
+                      );
+                      await setScannedDevices(scannedDevices);
+                  } else if (error) {
+                      return;
+                  }
+              },
             );
         }
         globalThis.Search = 'disable';
@@ -90,22 +94,34 @@ export const DevicesList = function ({ navigation }: any): JSX.Element {
             await connectedDevice.discoverAllServicesAndCharacteristics();
             //check characteristics
             manager
-                .characteristicsForDevice(connectedDevice.id, ServiceUUIDs.VSP)
-                .then((characteristics) => {
-                    console.log('characteristics:');
-                    for (let i = 0; i < characteristics.length; i++) {
-                        console.log(characteristics[i].uuid);
-                    }
-                    manager.stopDeviceScan();
-                    (globalThis as any).deviceID = id;
-                    (globalThis as any).deviceName = name;
-                    navigation.navigate('DeviceMenu');
-                })
-                .catch((err) => {
-                    setDeviceCount('');
-                    console.log('There was an error:' + err);
-                    return;
-                });
+              .characteristicsForDevice(connectedDevice.id, ServiceUUIDs.VSP)
+              .then((characteristics) => {
+                  console.log('characteristics:');
+                  for (let i = 0; i < characteristics.length; i++) {
+                      console.log(characteristics[i].uuid);
+
+                      manager.stopDeviceScan();
+                      (globalThis as any).deviceID = id;
+                      (globalThis as any).deviceName = name;
+                      navigation.navigate('DeviceMenu');
+                      /*
+                      if (
+                          characteristics[0].uuid ===
+                          CharacteristicsUUIDs.COM_TX
+                      ) {
+                          manager.stopDeviceScan();
+                          (globalThis as any).deviceID = id;
+                          (globalThis as any).deviceName = name;
+                          navigation.navigate('DeviceMenu');
+                      }
+                      */
+                  }
+              })
+              .catch((err) => {
+                  setDeviceCount('');
+                  console.log('There was an error:' + err);
+                  return;
+              });
         } catch (e) {
             setDeviceCount('');
             console.log(e);
@@ -113,47 +129,45 @@ export const DevicesList = function ({ navigation }: any): JSX.Element {
     };
 
     return (
-        <NativeBaseProvider>
-            <View style={devices_listScreen.container}>
-                <Header
-                    navigation={navigation}
-                    goto={'Root'}
-                    refreshing={'enable'}
-                    title={t('DevicesListScreen.title')}
-                />
-                <Box style={devices_listScreen.box}>
-                    <ScrollView
-                        nestedScrollEnabled={true}
-                        style={devices_listScreen.scroll}>
-                        <Center>
-                            <FlatList
-                                data={Object.values(scannedDevices)}
-                                renderItem={({ item }) => {
-                                    if (item.name != null) {
-                                        return (
-                                            <DeviceButton
-                                                navigation={navigation}
-                                                goto={'DeviceMenu'}
-                                                name={`${item.name}`}
-                                                id={`${item.id}`}
-                                                onPress={() => {
-                                                    handleDeviceConnection(
-                                                        (item as any).id,
-                                                        (item as any).name,
-                                                    ).catch((err) => {
-                                                        console.log(err);
-                                                        return;
-                                                    });
-                                                }}
-                                            />
-                                        );
-                                    }
-                                }}
-                            />
-                        </Center>
-                    </ScrollView>
-                </Box>
-            </View>
-        </NativeBaseProvider>
+      <NativeBaseProvider>
+          <View style={devices_listScreen.container}>
+              <Header
+                navigation={navigation}
+                goto={'Root'}
+                refreshing={'enable'}
+                title={t('DevicesListScreen.title')}
+              />
+              <Box style={devices_listScreen.box}>
+                  <ScrollView
+                    nestedScrollEnabled={true}
+                    style={devices_listScreen.scroll}>
+                      <Center>
+                          <FlatList
+                            data={Object.values(scannedDevices)}
+                            renderItem={({ item }) => {
+                                if (item.name != null) {
+                                    return (
+                                      <DeviceButton
+                                        name={`${item.name}`}
+                                        id={`${item.id}`}
+                                        onPress={() => {
+                                            handleDeviceConnection(
+                                              (item as any).id,
+                                              (item as any).name,
+                                            ).catch((err) => {
+                                                console.log(err);
+                                                return;
+                                            });
+                                        }}
+                                      />
+                                    );
+                                }
+                            }}
+                          />
+                      </Center>
+                  </ScrollView>
+              </Box>
+          </View>
+      </NativeBaseProvider>
     );
 };
