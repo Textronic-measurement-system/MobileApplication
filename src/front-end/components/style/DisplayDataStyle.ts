@@ -18,9 +18,9 @@ export const displayDataComponent = StyleSheet.create({
         marginBottom: '5%',
     },
     sliderText: {
-        fontSize: 18,
+        fontSize: 20,
         fontWeight: 'bold',
-        top: '8%',
+        marginTop: "20%",
         color: 'rgb(245,245,245)',
     },
     slider: {
