@@ -1,24 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import {
-    manager,
-    ServiceUUIDs,
-    CharacteristicsUUIDs,
-} from '../../back-end/bluetooth/BLEService';
+import React from 'react';
 import { Box, NativeBaseProvider, Text, View } from 'native-base';
 import { SelectHeader } from '../components/SelectHeader';
-import { SelectButton } from '../components/SelectButton';
 import { dataScreen } from './style/DataScreenStyle';
+import { DisplayData } from '../components/DisplayData';
 
 export const DataScreen = function ({ navigation }: any): JSX.Element {
     return (
-      <NativeBaseProvider>
-          <View style={dataScreen.container}>
-              <SelectHeader navigation={navigation} />
-              <Box style={dataScreen.box}>
-                  <SelectButton />
-              </Box>
-          </View>
-      </NativeBaseProvider>
+        <NativeBaseProvider>
+            <View style={dataScreen.container}>
+                <SelectHeader navigation={navigation} />
+                <Box style={dataScreen.box}>
+                    <DisplayData />
+                </Box>
+            </View>
+        </NativeBaseProvider>
     );
 };
