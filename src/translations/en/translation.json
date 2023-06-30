@@ -11,11 +11,11 @@
     "DeviceMenuScreen": {
         "title": "Device menu",
         "disconnected": "Disconnected",
-        "value1": "Display data",
+        "value1": "Display data"
     },
     "DataScreen": {
         "title": "Results",
         "button": "Start read value",
-        "button1": "Start write value",
+        "button1": "Start write value"
     }
 }

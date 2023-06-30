@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Text, HStack} from 'native-base';
+import { Button, Text, HStack } from 'native-base';
 import { remoteControlComponent } from './style/SelectButtonStyle';
 import { DisplayData } from './DisplayData';
-import { Image } from "react-native";
+import { Image } from 'react-native';
 
 export const SelectButton = function (): JSX.Element {
     const { t } = useTranslation();

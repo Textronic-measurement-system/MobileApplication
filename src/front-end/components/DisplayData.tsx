@@ -45,10 +45,7 @@ export const DisplayData = function (): JSX.Element {
                     if (error) {
                         console.log(error);
                     }
-                    if (
-                        base64.decode(characteristic.value) === null ||
-                        base64.decode(characteristic.value) === undefined
-                    ) {
+                    if (base64.decode(characteristic.value) === null) {
                         setCOM_TEM({
                             ...(COM_TEM as any),
                             value: 0,
@@ -77,10 +74,7 @@ export const DisplayData = function (): JSX.Element {
                     if (error) {
                         console.log(error);
                     }
-                    if (
-                        base64.decode(characteristic.value) === null ||
-                        base64.decode(characteristic.value) === undefined
-                    ) {
+                    if (base64.decode(characteristic.value) === null) {
                         setCOM_RES({
                             ...(COM_RES as any),
                             value: 0,
@@ -109,10 +103,7 @@ export const DisplayData = function (): JSX.Element {
                     if (error) {
                         console.log(error);
                     }
-                    if (
-                        base64.decode(characteristic.value) === null ||
-                        base64.decode(characteristic.value) === undefined
-                    ) {
+                    if (base64.decode(characteristic.value) === null) {
                         setCOM_IMP({
                             ...(COM_IMP as any),
                             value: 0,
@@ -141,10 +132,7 @@ export const DisplayData = function (): JSX.Element {
                     if (error) {
                         console.log(error);
                     }
-                    if (
-                        base64.decode(characteristic.value) === null ||
-                        base64.decode(characteristic.value) === undefined
-                    ) {
+                    if (base64.decode(characteristic.value) === null) {
                         setCOM_FRE({
                             ...(COM_FRE as any),
                             value: 0,

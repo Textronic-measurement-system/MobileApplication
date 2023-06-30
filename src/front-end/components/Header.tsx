@@ -47,6 +47,10 @@ export const Header = function ({
         if (value === 'disconnect') {
             handleDisconnectDevice();
         } else {
+            manager.cancelTransaction('COM_TEM');
+            manager.cancelTransaction('COM_RES');
+            manager.cancelTransaction('COM_IMP');
+            manager.cancelTransaction('COM_FRE');
             navigation.navigate(goto);
         }
     };

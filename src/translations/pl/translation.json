@@ -11,11 +11,11 @@
     "DeviceMenuScreen": {
         "title": "Menu",
         "disconnected": "Rozłącz się",
-        "value1": "Wyświetlanie danych",
+        "value1": "Wyświetlanie danych"
     },
     "DataScreen": {
         "title": "Wyniki",
         "button": "Przeczytaj wartość",
-        "button1": "Wpisz wartość",
+        "button1": "Wpisz wartość"
     }
 }
