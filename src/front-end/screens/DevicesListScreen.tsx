@@ -81,6 +81,7 @@ export const DevicesList = function ({ navigation }: any): JSX.Element {
             const connectedDevice = await manager.connectToDevice(id, {
                 requestMTU: 247,
             });
+            console.log(connectedDevice.mtu);
             if (connectedDevice.mtu === 247) {
                 console.log('request good');
             }
@@ -123,13 +124,13 @@ export const DevicesList = function ({ navigation }: any): JSX.Element {
                     title={t('DevicesListScreen.title')}
                 />
                 <Box style={devices_listScreen.box}>
-                    <Center>
-                        <FlatList
-                            style={devices_listScreen.scroll}
-                            data={Object.values(scannedDevices)}
-                            renderItem={({ item }) => {
-                                if (item.name != null) {
-                                    return (
+                    <FlatList
+                        style={devices_listScreen.scroll}
+                        data={Object.values(scannedDevices)}
+                        renderItem={({ item }) => {
+                            if (item.name != null) {
+                                return (
+                                    <Center>
                                         <DeviceButton
                                             name={`${item.name}`}
                                             id={`${item.id}`}
@@ -143,11 +144,11 @@ export const DevicesList = function ({ navigation }: any): JSX.Element {
                                                 });
                                             }}
                                         />
-                                    );
-                                }
-                            }}
-                        />
-                    </Center>
+                                    </Center>
+                                );
+                            }
+                        }}
+                    />
                 </Box>
             </View>
         </NativeBaseProvider>
