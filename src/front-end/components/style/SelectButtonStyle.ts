@@ -13,7 +13,7 @@ export const remoteControlComponent = StyleSheet.create({
         backgroundColor: 'rgb(66,66,66)',
     },
     text: {
-        color: 'rgb(245,245,245)',
+        color: 'rgb(217, 217, 217)',
         fontSize: 18,
     },
     button2: {

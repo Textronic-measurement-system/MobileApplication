@@ -32,7 +32,7 @@ export const Header = function ({
         if (value === 'enable') {
             return (
                 <Button style={headerComponent.button2} onPress={EnableSerach}>
-                    <SearchIcon size="8" color={'rgb(245,245,245)'} />
+                    <SearchIcon size="8" color={'rgb(255,255,255)'} />
                 </Button>
             );
         }
@@ -62,7 +62,10 @@ export const Header = function ({
                     <Button
                         style={headerComponent.button1}
                         onPress={() => DisconnectButton(refreshing)}>
-                        <ChevronLeftIcon size="8" color={'rgb(245,245,245)'} />
+                        <ChevronLeftIcon
+                            size="8"
+                            color={'rgb(255,255,255)'}
+                        />
                     </Button>
                     {RefreshButton(refreshing)}
                 </HStack>

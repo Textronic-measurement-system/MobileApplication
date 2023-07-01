@@ -5,13 +5,13 @@ export const devices_listScreen = StyleSheet.create({
     container: {
         flex: 2,
         width: screen_width,
-        backgroundColor: 'rgb(70,147,94)',
+        backgroundColor: 'rgb(0, 163, 84)',
         alignItems: 'center',
     },
     box: {
         height: '84%',
         width: '92%',
-        backgroundColor: 'rgb(146,180,156)',
+        backgroundColor: 'rgb(217, 217, 217)',
         borderRadius: 50,
         bottom: '3%',
     },

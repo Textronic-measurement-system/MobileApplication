@@ -5,9 +5,9 @@ export const welcomeScreen = StyleSheet.create({
     container: {
         flex: 1,
         width: screen_width,
-        backgroundColor: 'rgba(0,0,0, 0.42)',
         alignItems: 'center',
         justifyContent: 'flex-end',
+        backgroundColor: 'rgba(0,0,0, 0.15)',
     },
     picture: {
         height: '100%',
@@ -18,7 +18,7 @@ export const welcomeScreen = StyleSheet.create({
         height: '6%',
         bottom: '20%',
         borderRadius: 50,
-        backgroundColor: 'rgb(246,246,246)',
+        backgroundColor: 'rgb(217, 217, 217)',
         marginTop: '6%',
     },
     button_text: {
@@ -26,15 +26,8 @@ export const welcomeScreen = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 18,
     },
-    text1: {
-        bottom: '12%',
-        color: 'rgb(245,245,245)',
-        fontWeight: 'bold',
-        fontSize: 33,
-        paddingTop: '5%',
-    },
-    text2: {
-        color: 'rgb(245,245,245)',
+    text: {
+        color: 'rgb(255,255,255)',
         fontSize: 12,
     },
 });

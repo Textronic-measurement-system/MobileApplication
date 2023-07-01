@@ -20,7 +20,7 @@ export const headerComponent = StyleSheet.create({
         left: '60%',
     },
     title: {
-        color: 'rgb(245,245,245)',
+        color: 'rgb(255,255,255)',
         fontSize: 32,
         paddingTop: '3%',
         textAlign: 'center',

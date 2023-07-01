@@ -13,10 +13,10 @@ export const device_buttonComponent = StyleSheet.create({
         height: '100%',
         borderRadius: 15,
         justifyContent: 'flex-start',
-        backgroundColor: 'rgb(94,157,117)',
+        backgroundColor: 'rgb(0,163,84)',
     },
     text: {
-        color: 'rgb(245,245,245)',
+        color: 'rgb(255,255,255)',
         fontSize: 20,
     },
 });

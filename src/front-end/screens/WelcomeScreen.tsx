@@ -12,14 +12,8 @@ export const WelcomeScreen = function ({ navigation }: any): JSX.Element {
         <NativeBaseProvider>
             <ImageBackground
                 style={welcomeScreen.picture}
-                source={require('../pictures/welcome-screen-picture.jpg')}>
+                source={require('../pictures/logo_wallpaper.png')}>
                 <View style={welcomeScreen.container}>
-                    <Text style={welcomeScreen.text1}>
-                        {t('WelcomeScreen.welcome1')}
-                    </Text>
-                    <Text style={welcomeScreen.text1}>
-                        {t('WelcomeScreen.welcome2')}
-                    </Text>
                     <Button
                         style={welcomeScreen.button}
                         onPress={() => navigation.navigate('DevicesList')}>
@@ -27,7 +21,7 @@ export const WelcomeScreen = function ({ navigation }: any): JSX.Element {
                             {t('WelcomeScreen.button')}
                         </Text>
                     </Button>
-                    <Text style={welcomeScreen.text2}>
+                    <Text style={welcomeScreen.text}>
                         {t('WelcomeScreen.description')}
                     </Text>
                 </View>
