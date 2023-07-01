@@ -14,8 +14,9 @@
         "value1": "Wyświetlanie danych"
     },
     "DataScreen": {
-        "title": "Wyniki",
-        "button": "Przeczytaj wartość",
-        "button1": "Wpisz wartość"
+        "temperature": "Temperatura",
+        "resistance": "Rezystancja",
+        "impedance": "Impedancja",
+        "frequency": "Częstotliwość"
     }
 }

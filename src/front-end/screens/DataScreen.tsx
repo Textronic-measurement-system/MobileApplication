@@ -85,19 +85,27 @@ export const DataScreen = function ({ navigation }: any): JSX.Element {
                     <VStack space={'5%'} style={dataScreen.legend}>
                         <HStack space={'10%'}>
                             <CircleIcon size="5" color={'rgb(218,16,16)'} />
-                            <Text style={dataScreen.legendTest}>Hello</Text>
+                            <Text style={dataScreen.legendTest}>
+                                {t('DataScreen.temperature')}
+                            </Text>
                         </HStack>
                         <HStack space={'10%'}>
                             <CircleIcon size="5" color={'rgb(197,18,215)'} />
-                            <Text style={dataScreen.legendTest}>Hello</Text>
+                            <Text style={dataScreen.legendTest}>
+                                {t('DataScreen.resistance')}
+                            </Text>
                         </HStack>
                         <HStack space={'10%'}>
                             <CircleIcon size="5" color={'rgb(26,152,12)'} />
-                            <Text style={dataScreen.legendTest}>Hello</Text>
+                            <Text style={dataScreen.legendTest}>
+                                {t('DataScreen.impedance')}
+                            </Text>
                         </HStack>
                         <HStack space={'10%'}>
                             <CircleIcon size="5" color={'rgb(36,15,187)'} />
-                            <Text style={dataScreen.legendTest}>Hello</Text>
+                            <Text style={dataScreen.legendTest}>
+                                {t('DataScreen.frequency')}
+                            </Text>
                         </HStack>
                     </VStack>
                 </Box>

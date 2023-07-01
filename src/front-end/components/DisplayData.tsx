@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-    Center,
-    HStack,
-    NativeBaseProvider,
-    Text,
-    View,
-} from 'native-base';
+import { Center, HStack, NativeBaseProvider, Text, View } from 'native-base';
 import { displayDataComponent } from './style/DisplayDataStyle';
 import {
     manager,
@@ -159,8 +153,7 @@ export const DisplayData = function (): JSX.Element {
                 value: 0,
             });
         }
-
-        return 'Temperature\n' + (COM_TEM as any).value;
+        return '\n' + (COM_TEM as any).value;
     };
 
     const DisplayRes = () => {
@@ -171,7 +164,7 @@ export const DisplayData = function (): JSX.Element {
             });
         }
 
-        return 'Resistance\n' + (COM_RES as any).value;
+        return '\n' + (COM_RES as any).value;
     };
 
     const DisplayImp = () => {
@@ -182,7 +175,7 @@ export const DisplayData = function (): JSX.Element {
             });
         }
 
-        return 'Impedance\n' + (COM_IMP as any).value;
+        return '\n' + (COM_IMP as any).value;
     };
 
     const DisplayFre = () => {
@@ -193,7 +186,7 @@ export const DisplayData = function (): JSX.Element {
             });
         }
 
-        return 'Frequency\n' + (COM_FRE as any).value;
+        return '\n' + (COM_FRE as any).value;
     };
 
     return (
@@ -202,15 +195,19 @@ export const DisplayData = function (): JSX.Element {
                 <Center>
                     <HStack style={displayDataComponent.column} space={'3%'}>
                         <Text style={displayDataComponent.text}>
+                            {t('DataScreen.temperature')}
                             {DisplayTem()}
                         </Text>
                         <Text style={displayDataComponent.text}>
+                            {t('DataScreen.resistance')}
                             {DisplayRes()}
                         </Text>
                         <Text style={displayDataComponent.text}>
+                            {t('DataScreen.impedance')}
                             {DisplayImp()}
                         </Text>
                         <Text style={displayDataComponent.text}>
+                            {t('DataScreen.frequency')}
                             {DisplayFre()}
                         </Text>
                     </HStack>

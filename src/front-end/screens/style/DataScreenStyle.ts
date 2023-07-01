@@ -19,7 +19,7 @@ export const dataScreen = StyleSheet.create({
     },
     legend: {
         flex: 1,
-        left: '-32%',
+        left: '-25%',
         top: '5%',
     },
     legendTest: {

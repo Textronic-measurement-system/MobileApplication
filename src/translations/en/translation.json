@@ -14,8 +14,9 @@
         "value1": "Display data"
     },
     "DataScreen": {
-        "title": "Results",
-        "button": "Start read value",
-        "button1": "Start write value"
+        "temperature": "Temperature",
+        "resistance": "Resistance",
+        "impedance": "Impedance",
+        "frequency": "Frequency"
     }
 }
