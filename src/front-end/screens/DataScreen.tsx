@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Dimensions, Switch } from 'react-native';
+import React, { useState } from 'react';
+import { Switch } from 'react-native';
 import {
     Box,
     CircleIcon,
@@ -13,7 +13,6 @@ import { dataScreen } from './style/DataScreenStyle';
 import { DisplayData } from '../components/DisplayData';
 import { Header } from '../components/Header';
 import { useTranslation } from 'react-i18next';
-import { LineChart } from 'react-native-chart-kit';
 import { ChartComponent } from '../components/ChartComponent';
 
 export const DataScreen = function ({ navigation }: any): JSX.Element {
