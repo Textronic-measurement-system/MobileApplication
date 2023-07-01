@@ -17,13 +17,12 @@ export const displayDataComponent = StyleSheet.create({
         marginTop: '5%',
         marginBottom: '5%',
     },
-    sliderText: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginTop: '20%',
-        color: 'rgb(245,245,245)',
+    text: {
+        fontSize: 14,
+        color: 'rgb(0,0,0)',
+        textAlign: 'center',
     },
-    slider: {
-        top: '10%',
+    column: {
+        top: '6%',
     },
 });

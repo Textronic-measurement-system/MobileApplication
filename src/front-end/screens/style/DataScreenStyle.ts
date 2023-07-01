@@ -5,23 +5,24 @@ export const dataScreen = StyleSheet.create({
     container: {
         flex: 2,
         width: screen_width,
-        backgroundColor: 'rgb(94,157,117)',
+        backgroundColor: 'rgb(0,163,84)',
         alignItems: 'center',
         justifyContent: 'center',
     },
     box: {
         height: '84%',
         width: '92%',
-        backgroundColor: 'rgb(146,180,156)',
+        backgroundColor: 'rgb(217,217,217)',
         alignItems: 'center',
         borderRadius: 50,
         bottom: '3%',
     },
-    text1: {
-        color: 'rgb(245,245,245)',
-        fontWeight: 'bold',
-        fontSize: 40,
-        paddingTop: '5%',
+    legend: {
+        flex: 1,
+        left: '-32%',
         top: '5%',
+    },
+    legendTest: {
+        fontSize: 16,
     },
 });

@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Center, NativeBaseProvider, Text, View } from 'native-base';
+import {
+    Center,
+    HStack,
+    NativeBaseProvider,
+    Text,
+    View,
+} from 'native-base';
 import { displayDataComponent } from './style/DisplayDataStyle';
 import {
     manager,
@@ -16,24 +22,6 @@ export const DisplayData = function (): JSX.Element {
     const [COM_RES, setCOM_RES] = useState('');
     const [COM_IMP, setCOM_IMP] = useState('');
     const [COM_FRE, setCOM_FRE] = useState('');
-
-    const handleWrite = async (sendData: any) => {
-        try {
-            await manager.writeCharacteristicWithoutResponseForDevice(
-                id,
-                ServiceUUIDs.VSP,
-                CharacteristicsUUIDs.COM_RX,
-                base64.encode(sendData),
-            );
-            await manager.readCharacteristicForDevice(
-                id,
-                ServiceUUIDs.VSP,
-                CharacteristicsUUIDs.COM_RX,
-            );
-        } catch (e) {
-            return false;
-        }
-    };
 
     const handleReadCOM_TEM = async () => {
         try {
@@ -164,55 +152,68 @@ export const DisplayData = function (): JSX.Element {
         return () => clearTimeout(timerWrite);
     }, []);
 
-    const DisplayValue = () => {
+    const DisplayTem = () => {
         if ((COM_TEM as any).value === undefined) {
             setCOM_TEM({
                 ...(COM_TEM as any),
                 value: 0,
             });
-        } else if ((COM_RES as any).value === undefined) {
+        }
+
+        return 'Temperature\n' + (COM_TEM as any).value;
+    };
+
+    const DisplayRes = () => {
+        if ((COM_RES as any).value === undefined) {
             setCOM_RES({
                 ...(COM_RES as any),
                 value: 0,
             });
-        } else if ((COM_IMP as any).value === undefined) {
+        }
+
+        return 'Resistance\n' + (COM_RES as any).value;
+    };
+
+    const DisplayImp = () => {
+        if ((COM_IMP as any).value === undefined) {
             setCOM_IMP({
                 ...(COM_IMP as any),
                 value: 0,
             });
-        } else if ((COM_FRE as any).value === undefined) {
+        }
+
+        return 'Impedance\n' + (COM_IMP as any).value;
+    };
+
+    const DisplayFre = () => {
+        if ((COM_FRE as any).value === undefined) {
             setCOM_FRE({
                 ...(COM_FRE as any),
                 value: 0,
             });
         }
 
-        return (
-            'Temperature: ' +
-            (COM_TEM as any).value +
-            ',\n\n' +
-            'Resistance: ' +
-            (COM_RES as any).value +
-            ',\n\n' +
-            'Impedance: ' +
-            (COM_IMP as any).value +
-            ',\n\n' +
-            'Frequency: ' +
-            (COM_FRE as any).value +
-            '\n'
-        );
+        return 'Frequency\n' + (COM_FRE as any).value;
     };
 
     return (
         <NativeBaseProvider>
             <View>
                 <Center>
-                    <Text style={displayDataComponent.sliderText}>
-                        {DisplayValue()}
-                    </Text>
-                    <Button colorScheme="green" onPress={handleWrite}>
-                        Send Data
-                    </Button>
+                    <HStack style={displayDataComponent.column} space={'3%'}>
+                        <Text style={displayDataComponent.text}>
+                            {DisplayTem()}
+                        </Text>
+                        <Text style={displayDataComponent.text}>
+                            {DisplayRes()}
+                        </Text>
+                        <Text style={displayDataComponent.text}>
+                            {DisplayImp()}
+                        </Text>
+                        <Text style={displayDataComponent.text}>
+                            {DisplayFre()}
+                        </Text>
+                    </HStack>
                 </Center>
             </View>
         </NativeBaseProvider>
