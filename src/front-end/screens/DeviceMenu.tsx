@@ -40,6 +40,24 @@ export const DeviceMenu = function ({ navigation }: any): JSX.Element {
                         </Button>
                         <Button
                             style={device_menuScreen.button}
+                            onPress={() => navigation.navigate('DataBase')}>
+                            <Text style={device_menuScreen.text}>
+                                {'Data Base'}
+                            </Text>
+                        </Button>
+                    </HStack>
+                    <HStack space={'5%'}>
+                        <Button
+                            style={device_menuScreen.button}
+                            onPress={() =>
+                                navigation.navigate('FrequencyScreen')
+                            }>
+                            <Text style={device_menuScreen.text}>
+                                {'Frequency'}
+                            </Text>
+                        </Button>
+                        <Button
+                            style={device_menuScreen.button}
                             onPress={handleDisconnectDevice}>
                             <Text style={device_menuScreen.text}>
                                 {t('DeviceMenuScreen.disconnected')}

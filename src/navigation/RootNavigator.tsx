@@ -6,6 +6,8 @@ import { WelcomeScreen } from '../front-end/screens/WelcomeScreen';
 import { DevicesList } from '../front-end/screens/DevicesListScreen';
 import { DeviceMenu } from '../front-end/screens/DeviceMenu';
 import { DataScreen } from '../front-end/screens/DataScreen';
+import { DataBase } from '../front-end/screens/DataBaseScreen';
+import { FrequencyScreen } from '../front-end/screens/FrequencyScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,7 +21,7 @@ export const RootNavigator = function (): JSX.Element {
             />
             <Stack.Screen
                 name="DevicesList"
-                component={DeviceMenu}
+                component={DevicesList}
                 options={{ title: 'Devices List Screen' }}
             />
             <Stack.Screen
@@ -31,6 +33,16 @@ export const RootNavigator = function (): JSX.Element {
                 name="DataScreen"
                 component={DataScreen}
                 options={{ title: 'Data Screen' }}
+            />
+            <Stack.Screen
+                name="DataBase"
+                component={DataBase}
+                options={{ title: 'Data Base' }}
+            />
+            <Stack.Screen
+                name="FrequencyScreen"
+                component={FrequencyScreen}
+                options={{ title: 'Frequency Screen' }}
             />
         </Stack.Navigator>
     );
