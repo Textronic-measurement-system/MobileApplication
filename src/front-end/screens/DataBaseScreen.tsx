@@ -7,12 +7,11 @@ import axios from 'axios';
 
 export const DataBase = function ({ navigation }: any): JSX.Element {
     const { t } = useTranslation();
-    const baseUrl = 'https://appbackend.azurewebsites.net';
-    const baseUrl1 = 'http://172.25.192.1:3000';
+    const baseUrl = 'https://appbackend.azurewebsites.net/measurements';
 
     const GetFunction = () => {
         axios
-            .get(`${baseUrl1}/users`, {
+            .get(`${baseUrl}`, {
                 headers: {
                     'Access-Control-Allow-Origin': '*',
                     'Access-Control-Allow-Methods': 'GET',
