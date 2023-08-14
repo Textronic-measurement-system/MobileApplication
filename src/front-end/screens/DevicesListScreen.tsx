@@ -13,6 +13,7 @@ import {
     ServiceUUIDs,
     CharacteristicsUUIDs,
 } from '../../back-end/bluetooth/BLEService';
+import {SearchHeader} from "../components/SearchHeader";
 
 export const DevicesList = function ({ navigation }: any): JSX.Element {
     const { t } = useTranslation();
@@ -117,7 +118,7 @@ export const DevicesList = function ({ navigation }: any): JSX.Element {
     return (
         <NativeBaseProvider>
             <View style={devices_listScreen.container}>
-                <Header
+                <SearchHeader
                     navigation={navigation}
                     goto={'Root'}
                     refreshing={'enable'}

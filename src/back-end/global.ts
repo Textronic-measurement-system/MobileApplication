@@ -5,6 +5,7 @@ declare global {
     var RX_value: string;
     var Search: string;
     var valueType: string;
+    var screen_used: number;
 }
 
 export {};

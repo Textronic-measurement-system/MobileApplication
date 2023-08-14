@@ -6,6 +6,7 @@ import {
     NativeBaseProvider,
     SearchIcon,
     View,
+    Text,
 } from 'native-base';
 import { search_headerComponent } from './style/SearchHeaderStyle';
 import { manager } from '../../back-end/bluetooth/BLEService';
@@ -14,12 +15,14 @@ interface Props {
     navigation: any;
     goto: any;
     refreshing: React.ReactNode;
+    title: any;
 }
 
 export const SearchHeader = function ({
     navigation,
     goto,
     refreshing,
+    title,
 }: Props): JSX.Element {
     const EnableSerach = () => {
         (globalThis as any).Search = 'enable';
@@ -65,6 +68,7 @@ export const SearchHeader = function ({
                     </Button>
                     {RefreshButton(refreshing)}
                 </HStack>
+                <Text style={search_headerComponent.title}>{title}</Text>
             </View>
         </NativeBaseProvider>
     );

@@ -20,4 +20,9 @@ export const bottom_menuComponent = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 16,
     },
+    text1: {
+        color: 'rgb(241,184,135)',
+        fontWeight: 'bold',
+        fontSize: 16,
+    },
 });

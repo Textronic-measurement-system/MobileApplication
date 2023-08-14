@@ -22,7 +22,7 @@ export const RootNavigator = function (): JSX.Element {
             />
             <Stack.Screen
                 name="DevicesList"
-                component={DataScreen}
+                component={DevicesList}
                 options={{ title: 'Devices List Screen' }}
             />
             <Stack.Screen
