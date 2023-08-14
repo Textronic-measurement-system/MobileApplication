@@ -39,7 +39,7 @@ export const BottomMenuComponent = function ({
 
     const ButtonThree = () => {
         StopTransferBTData();
-        navigation.navigate('DeviceMenu');
+        navigation.navigate('SettingsScreen');
     };
 
     const ButtonFour = () => {

@@ -8,6 +8,7 @@ import { DeviceMenu } from '../front-end/screens/DeviceMenu';
 import { DataScreen } from '../front-end/screens/DataScreen';
 import { DataBase } from '../front-end/screens/DataBaseScreen';
 import { FrequencyScreen } from '../front-end/screens/FrequencyScreen';
+import { SettingsScreen } from "../front-end/screens/SettingsScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -43,6 +44,11 @@ export const RootNavigator = function (): JSX.Element {
                 name="FrequencyScreen"
                 component={FrequencyScreen}
                 options={{ title: 'Frequency Screen' }}
+            />
+            <Stack.Screen
+                name="SettingsScreen"
+                component={SettingsScreen}
+                options={{ title: 'Settings Screen' }}
             />
         </Stack.Navigator>
     );
