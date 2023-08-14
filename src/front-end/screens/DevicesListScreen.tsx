@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, NativeBaseProvider, View, FlatList, Center } from 'native-base';
 
-import { Header } from '../components/Header';
 import { DeviceButton } from '../components/DeviceButton';
 import { devices_listScreen } from './style/DevicesListScreenStyle';
 
@@ -13,7 +12,7 @@ import {
     ServiceUUIDs,
     CharacteristicsUUIDs,
 } from '../../back-end/bluetooth/BLEService';
-import {SearchHeader} from "../components/SearchHeader";
+import { SearchHeader } from '../components/SearchHeader';
 
 export const DevicesList = function ({ navigation }: any): JSX.Element {
     const { t } = useTranslation();
@@ -101,6 +100,7 @@ export const DevicesList = function ({ navigation }: any): JSX.Element {
                         manager.stopDeviceScan();
                         (globalThis as any).deviceID = id;
                         (globalThis as any).deviceName = name;
+                        globalThis.screen_used = 0;
                         navigation.navigate('DataScreen');
                     }
                 })
