@@ -1,4 +1,4 @@
-{
+/*{
     "WelcomeScreen": {
         "welcome1": "WITAMY W APLIKACJI",
         "welcome2": "TEKSTRONICZNEJ",
@@ -13,10 +13,44 @@
         "disconnected": "Rozłącz się",
         "value1": "Wyświetlanie danych"
     },
+    "ScreenNames": {
+        "home": "Ekran główny",
+        "frequency": "Częstotliwość",
+        "settings": "Ustawienia",
+        "logout": "Wyloguj"
+    },
     "DataScreen": {
         "temperature": "Temperatura",
         "resistance": "Rezystancja",
         "impedance": "Impedancja",
         "frequency": "Częstotliwość"
+    }
+}*/
+{
+    "WelcomeScreen": {
+        "welcome1": "WELCOME IN",
+        "welcome2": "TEXTRONIC APP",
+        "description": "© 2023 Piotr Sarna",
+        "button": "GET STARTED"
+    },
+    "DevicesListScreen": {
+        "title": "Device list"
+    },
+    "DeviceMenuScreen": {
+        "title": "Device menu",
+        "disconnected": "Disconnected",
+        "value1": "Display data"
+    },
+    "ScreenNames": {
+        "home": "Home",
+        "frequency": "Frequency",
+        "settings": "Settings",
+        "logout": "Logout"
+    },
+    "DataScreen": {
+        "temperature": "Temperature",
+        "resistance": "Resistance",
+        "impedance": "Impedance",
+        "frequency": "Frequency"
     }
 }

@@ -10,12 +10,11 @@ export const dataScreen = StyleSheet.create({
         justifyContent: 'center',
     },
     box: {
-        height: '84%',
-        width: '92%',
+        height: '86.5%',
+        width: '100%',
         backgroundColor: 'rgb(217,217,217)',
         alignItems: 'center',
-        borderRadius: 50,
-        bottom: '3%',
+        borderRadius: 25,
     },
     legend: {
         flex: 1,

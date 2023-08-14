@@ -100,7 +100,7 @@ export const DevicesList = function ({ navigation }: any): JSX.Element {
                         manager.stopDeviceScan();
                         (globalThis as any).deviceID = id;
                         (globalThis as any).deviceName = name;
-                        navigation.navigate('DeviceMenu');
+                        navigation.navigate('DataScreen');
                     }
                 })
                 .catch((err) => {

@@ -14,6 +14,7 @@ import { Header } from '../components/Header';
 import { useTranslation } from 'react-i18next';
 import { FrequencyChart } from '../components/FrequencyChart';
 import { Switch } from 'react-native';
+import { BottomMenuComponent } from '../components/BottomMenuComponent';
 
 export const FrequencyScreen = function ({ navigation }: any): JSX.Element {
     const { t } = useTranslation();
@@ -29,12 +30,7 @@ export const FrequencyScreen = function ({ navigation }: any): JSX.Element {
     return (
         <NativeBaseProvider>
             <View style={dataScreen.container}>
-                <Header
-                    navigation={navigation}
-                    goto={'DeviceMenu'}
-                    refreshing={'disable'}
-                    title={'Frequency'}
-                />
+                <Header title={t('ScreenNames.frequency')} />
                 <Box style={dataScreen.box}>
                     <DisplayData />
                     <FrequencyChart
@@ -78,6 +74,7 @@ export const FrequencyScreen = function ({ navigation }: any): JSX.Element {
                         </HStack>
                     </VStack>
                 </Box>
+                <BottomMenuComponent navigation={navigation} />
             </View>
         </NativeBaseProvider>
     );

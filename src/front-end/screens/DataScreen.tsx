@@ -14,6 +14,7 @@ import { DisplayData } from '../components/DisplayData';
 import { Header } from '../components/Header';
 import { useTranslation } from 'react-i18next';
 import { ChartComponent } from '../components/ChartComponent';
+import { BottomMenuComponent } from '../components/BottomMenuComponent';
 
 export const DataScreen = function ({ navigation }: any): JSX.Element {
     const { t } = useTranslation();
@@ -37,12 +38,7 @@ export const DataScreen = function ({ navigation }: any): JSX.Element {
     return (
         <NativeBaseProvider>
             <View style={dataScreen.container}>
-                <Header
-                    navigation={navigation}
-                    goto={'DeviceMenu'}
-                    refreshing={'disable'}
-                    title={t('DeviceMenuScreen.value1')}
-                />
+                <Header title={t('ScreenNames.home')} />
                 <Box style={dataScreen.box}>
                     <DisplayData />
                     <ChartComponent
@@ -122,6 +118,7 @@ export const DataScreen = function ({ navigation }: any): JSX.Element {
                         </HStack>
                     </VStack>
                 </Box>
+                <BottomMenuComponent navigation={navigation} />
             </View>
         </NativeBaseProvider>
     );
