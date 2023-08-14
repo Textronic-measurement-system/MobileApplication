@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Center, HStack, Text, View } from 'native-base';
-import { bottom_menuComponent } from './style/BottonMenuStyle';
+import { bottom_menuComponent } from './style/BottomMenuStyle';
 import { manager } from '../../back-end/bluetooth/BLEService';
 import { useTranslation } from 'react-i18next';
 
@@ -8,7 +8,7 @@ interface Props {
     navigation: any;
 }
 
-export const BottonMenuComponent = function ({
+export const BottomMenuComponent = function ({
     navigation,
 }: Props): JSX.Element {
     const { t } = useTranslation();
