@@ -1,5 +1,3 @@
-import React, { useState } from 'react';
-
 export const CurrentDate = () => {
     var date = new Date().getDate(); //Current Date
     var month = new Date().getMonth() + 1; //Current Month
