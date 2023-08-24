@@ -7,24 +7,30 @@ import axios from 'axios';
 
 export const DataBase = function ({ navigation }: any): JSX.Element {
     const { t } = useTranslation();
-    const baseUrl = 'https://appbackend.azurewebsites.net/measurements';
+    const baseUrl_measurement =
+        'https://appbackend.azurewebsites.net/measurements';
+    const baseUrl_measurementText =
+        'https://appbackend.azurewebsites.net/measurementsText';
 
     const GetFunction = () => {
         axios
-            .get(`${baseUrl}`, {
+            .get(`${baseUrl_measurement}`, {
                 headers: {
                     'Access-Control-Allow-Origin': '*',
                     'Access-Control-Allow-Methods': 'GET',
                 },
+                params: {
+                    answer: 1,
+                },
             })
             .then((response) => {
-                console.log(response.data);
+                console.log(response.data.args);
             });
     };
 
     const AddFunction = () => {
         axios
-            .post(`${baseUrl}`, {
+            .post(`${baseUrl_measurement}`, {
                 ID_MEASUREMENTTYPE: 99,
                 MEASUREMENT: 99.99,
                 MEASUREMENTTIME: '9999-99-99 99:99:99',
@@ -36,7 +42,7 @@ export const DataBase = function ({ navigation }: any): JSX.Element {
 
     const ReplaceFunction = () => {
         axios
-            .put(`${baseUrl}/measurements`, {
+            .put(`${baseUrl_measurement}`, {
                 id: 1,
                 ID_MEASUREMENTTYPE: 1,
                 MEASUREMENT: 36.6,
