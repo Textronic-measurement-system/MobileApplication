@@ -35,23 +35,17 @@ export const ChartComponent = function ({
         }
 
         if (isEnabledRes) {
-            setDataRES([
-                -87, 66, -69, 92, -40, -61, 16, 62, 20, -93, -54, 47, -89, -44,
-                18,
-            ]);
+            setDataRES(globalThis.Measurement_R);
         } else {
             setDataRES([]);
         }
         if (isEnabledImp) {
-            setDataIMP([5, 1, 4, 9, -4, -2, 8, 9, 3, 5, -5, 2, 5, -2, -8]);
+            setDataIMP(globalThis.Measurement_X);
         } else {
             setDataIMP([]);
         }
         if (isEnabledFre) {
-            setDataFRE([
-                -70, 60, -90, 20, -40, -60, 10, 60, 20, -93, -54, 40, -80, -40,
-                10,
-            ]);
+            setDataFRE(globalThis.Measurement_F);
         } else {
             setDataFRE([]);
         }

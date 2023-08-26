@@ -9,7 +9,8 @@ import { BottomMenuComponent } from '../components/BottomMenuComponent';
 export const SettingsScreen = function ({ navigation }: any): JSX.Element {
     const { t } = useTranslation();
     const baseUrl_measurementText =
-        'https://appbackend.azurewebsites.net/measurementsText';
+        'https://appbackend.azurewebsites.net/measurementsText_meas';
+
     const GetMeasurementsText = () => {
         axios
             .get(`${baseUrl_measurementText}`, {
@@ -19,7 +20,12 @@ export const SettingsScreen = function ({ navigation }: any): JSX.Element {
                 },
             })
             .then((response) => {
-                console.log(response.data);
+                const jsonData = JSON.parse(
+                    JSON.parse(JSON.stringify(response.data[0])).MEASUREMENT,
+                );
+                globalThis.Measurement_F = jsonData.F;
+                globalThis.Measurement_R = jsonData.R;
+                globalThis.Measurement_X = jsonData.X;
             });
     };
 
