@@ -4,13 +4,12 @@ import {
     CharacteristicsUUIDs,
 } from './bluetooth/BLEService';
 
-export const GetBLEMeasurementsText = async () => {
-    const id = globalThis.deviceID;
+export const GetBLEMeasurementsText = () => {
     const base64 = require('base-64');
 
     try {
-        await manager.monitorCharacteristicForDevice(
-            id,
+        manager.monitorCharacteristicForDevice(
+            globalThis.deviceID,
             ServiceUUIDs.VSP,
             CharacteristicsUUIDs.COM_SWEEP,
             (error, characteristic) => {

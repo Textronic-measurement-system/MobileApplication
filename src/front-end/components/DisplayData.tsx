@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Center, HStack, NativeBaseProvider, Text, View } from 'native-base';
 import { displayDataComponent } from './style/DisplayDataStyle';
@@ -7,132 +7,38 @@ import {
     ServiceUUIDs,
     CharacteristicsUUIDs,
 } from '../../back-end/bluetooth/BLEService';
+import { GetBLEMeasurementsText } from '../../back-end/GetBLEMeasurement';
+import { GetMeasurementsText } from '../../back-end/GetMeasurements';
+import { AddMeasurements } from '../../back-end/AddMeasurement';
 
 export const DisplayData = function (): JSX.Element {
     const { t } = useTranslation();
     const id = globalThis.deviceID;
     const base64 = require('base-64');
-    const [COM_TEM, setCOM_TEM] = useState('');
-    const [COM_RES, setCOM_RES] = useState('');
-    const [COM_IMP, setCOM_IMP] = useState('');
-    const [COM_FRE, setCOM_FRE] = useState('');
+
+    const [count, setCount] = useState(0);
+
+    const [COM_TEM, setCOM_TEM] = useState(
+        globalThis.Measurement_T === undefined
+            ? '0'
+            : globalThis.Measurement_T[globalThis.Measurement_T.length - 1],
+    );
+    const [COM_RES, setCOM_RES] = useState(
+        globalThis.Measurement_R === undefined
+            ? '0'
+            : globalThis.Measurement_R[globalThis.Measurement_R.length - 1],
+    );
+    const [COM_IMP, setCOM_IMP] = useState(
+        globalThis.Measurement_X === undefined
+            ? '0'
+            : globalThis.Measurement_X[globalThis.Measurement_X.length - 1],
+    );
+    const [COM_FRE, setCOM_FRE] = useState(
+        globalThis.Measurement_F === undefined
+            ? '0'
+            : globalThis.Measurement_F[globalThis.Measurement_F.length - 1],
+    );
     const [COM_SWEEP, setCOM_SWEEP] = useState('');
-
-    const handleReadCOM_TEM = async () => {
-        try {
-            await manager.monitorCharacteristicForDevice(
-                id,
-                ServiceUUIDs.VSP,
-                CharacteristicsUUIDs.COM_TEM,
-                (error, characteristic) => {
-                    if (error) {
-                        console.log(error);
-                    }
-                    if (base64.decode(characteristic.value) === null) {
-                        setCOM_TEM({
-                            ...(COM_TEM as any),
-                            value: 0,
-                        });
-                    } else {
-                        setCOM_TEM({
-                            ...(COM_TEM as any),
-                            value: base64.decode(characteristic.value),
-                        });
-                    }
-                },
-                'COM_TEM',
-            );
-        } catch (e) {
-            return false;
-        }
-    };
-
-    const handleReadCOM_RES = async () => {
-        try {
-            await manager.monitorCharacteristicForDevice(
-                id,
-                ServiceUUIDs.VSP,
-                CharacteristicsUUIDs.COM_RES,
-                (error, characteristic) => {
-                    if (error) {
-                        console.log(error);
-                    }
-                    if (base64.decode(characteristic.value) === null) {
-                        setCOM_RES({
-                            ...(COM_RES as any),
-                            value: 0,
-                        });
-                    } else {
-                        setCOM_RES({
-                            ...(COM_RES as any),
-                            value: base64.decode(characteristic.value),
-                        });
-                    }
-                },
-                'COM_RES',
-            );
-        } catch (e) {
-            return false;
-        }
-    };
-
-    const handleReadCOM_IMP = async () => {
-        try {
-            await manager.monitorCharacteristicForDevice(
-                id,
-                ServiceUUIDs.VSP,
-                CharacteristicsUUIDs.COM_IMP,
-                (error, characteristic) => {
-                    if (error) {
-                        console.log(error);
-                    }
-                    if (base64.decode(characteristic.value) === null) {
-                        setCOM_IMP({
-                            ...(COM_IMP as any),
-                            value: 0,
-                        });
-                    } else {
-                        setCOM_IMP({
-                            ...(COM_IMP as any),
-                            value: base64.decode(characteristic.value),
-                        });
-                    }
-                },
-                'COM_IMP',
-            );
-        } catch (e) {
-            return false;
-        }
-    };
-
-    const handleReadCOM_FRE = async () => {
-        try {
-            await manager.monitorCharacteristicForDevice(
-                id,
-                ServiceUUIDs.VSP,
-                CharacteristicsUUIDs.COM_FRE,
-                (error, characteristic) => {
-                    if (error) {
-                        console.log(error);
-                    }
-                    if (base64.decode(characteristic.value) === null) {
-                        setCOM_FRE({
-                            ...(COM_FRE as any),
-                            value: 0,
-                        });
-                    } else {
-                        setCOM_FRE({
-                            ...(COM_FRE as any),
-                            value: base64.decode(characteristic.value),
-                        });
-                    }
-                },
-                'COM_FRE',
-            );
-        } catch (e) {
-            return false;
-        }
-    };
 
     const handleReadCOM_SWEEP = async () => {
         try {
@@ -144,17 +50,10 @@ export const DisplayData = function (): JSX.Element {
                     if (error) {
                         console.log(error);
                     }
-                    if (base64.decode(characteristic.value) === null) {
-                        setCOM_SWEEP({
-                            ...(COM_SWEEP as any),
-                            value: 0,
-                        });
-                    } else {
-                        setCOM_SWEEP({
-                            ...(COM_SWEEP as any),
-                            value: base64.decode(characteristic.value),
-                        });
-                    }
+                    setCOM_SWEEP({
+                        ...(COM_SWEEP as any),
+                        value: base64.decode(characteristic.value),
+                    });
                 },
                 'COM_SWEEP',
             );
@@ -164,39 +63,53 @@ export const DisplayData = function (): JSX.Element {
     };
 
     const ReadCharacteristic = async () => {
-        // await handleReadCOM_TEM();
-        // await handleReadCOM_RES();
-        // await handleReadCOM_IMP();
-        // await handleReadCOM_FRE();
-        await handleReadCOM_SWEEP();
-        if ((COM_SWEEP as any).value !== 0) {
-            globalThis.Measurement_T = (COM_SWEEP as any).value;
+        if (count >= 1000000) {
+            setCount(0);
+        } else {
+            setCount(count + 1);
         }
+
+        await handleReadCOM_SWEEP();
+        console.log(COM_SWEEP);
+        await manager.cancelDeviceConnection((globalThis as any).deviceID);
+        GetMeasurementsText();
+        console.log('Measured');
     };
 
-    /*useEffect(() => {
-        const timerWrite = setTimeout(() => {
-            ReadCharacteristic();
-        }, 1);
-        return () => clearTimeout(timerWrite);
-    }, []);*/
+    const Reconnection = async () => {
+        await manager.connectToDevice(globalThis.deviceID, {
+            requestMTU: 517,
+        });
+        console.log('Connected ' + globalThis.deviceID);
+    };
+
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         ReadCharacteristic();
+    //     }, 10000);
+    //     setTimeout(() => {
+    //         Reconnection();
+    //     }, 10000);
+    // }, [count]);
 
     const DisplayTem = () => {
-        if ((COM_SWEEP as any).value === undefined) {
+        if ((COM_TEM as any).value === undefined) {
             if (globalThis.Measurement_T !== undefined) {
-                setCOM_SWEEP({
-                    ...(COM_SWEEP as any),
-                    value: globalThis.Measurement_T,
+                setCOM_TEM({
+                    ...(COM_TEM as any),
+                    value: globalThis.Measurement_T[
+                        globalThis.Measurement_T.length - 1
+                    ],
                 });
             } else {
-                setCOM_SWEEP({
-                    ...(COM_SWEEP as any),
+                setCOM_TEM({
+                    ...(COM_TEM as any),
                     value: 0,
                 });
             }
         }
 
-        return '\n' + (COM_SWEEP as any).value;
+        return '\n' + (COM_TEM as any).value;
     };
 
     const DisplayRes = () => {
@@ -225,8 +138,8 @@ export const DisplayData = function (): JSX.Element {
                 setCOM_IMP({
                     ...(COM_IMP as any),
                     value: globalThis.Measurement_X[
-                    globalThis.Measurement_X.length - 1
-                        ],
+                        globalThis.Measurement_X.length - 1
+                    ],
                 });
             } else {
                 setCOM_IMP({
@@ -245,8 +158,8 @@ export const DisplayData = function (): JSX.Element {
                 setCOM_FRE({
                     ...(COM_FRE as any),
                     value: globalThis.Measurement_F[
-                    globalThis.Measurement_F.length - 1
-                        ],
+                        globalThis.Measurement_F.length - 1
+                    ],
                 });
             } else {
                 setCOM_FRE({

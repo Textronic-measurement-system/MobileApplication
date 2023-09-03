@@ -77,8 +77,6 @@ export const DevicesList = function ({ navigation }: any): JSX.Element {
             setDeviceCount(id);
             const connectedDevice = await manager.connectToDevice(id, {
                 requestMTU: 517,
-                autoConnect: true,
-                timeout: 30000,
             });
             console.log(connectedDevice.mtu);
             if (connectedDevice.mtu !== 27) {
