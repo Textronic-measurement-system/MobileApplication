@@ -1,18 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, NativeBaseProvider, View, FlatList, Center } from 'native-base';
+import { Box, Center, FlatList, NativeBaseProvider, View } from 'native-base';
 
 import { DeviceButton } from '../components/DeviceButton';
 import { devices_listScreen } from './style/DevicesListScreenStyle';
 
-import { Device, DeviceId } from 'react-native-ble-plx';
+import { ConnectionPriority, Device, DeviceId } from 'react-native-ble-plx';
 import { requestPermission } from '../../back-end/bluetooth/BLEFunctions';
-import {
-    manager,
-    ServiceUUIDs,
-    CharacteristicsUUIDs,
-} from '../../back-end/bluetooth/BLEService';
+import { manager, ServiceUUIDs } from '../../back-end/bluetooth/BLEService';
 import { SearchHeader } from '../components/SearchHeader';
+import { GetMeasurementsText } from '../../back-end/GetMeasurements';
 
 export const DevicesList = function ({ navigation }: any): JSX.Element {
     const { t } = useTranslation();
@@ -79,30 +76,37 @@ export const DevicesList = function ({ navigation }: any): JSX.Element {
             await manager.connectedDevices([ServiceUUIDs.VSP]);
             setDeviceCount(id);
             const connectedDevice = await manager.connectToDevice(id, {
-                requestMTU: 247,
+                requestMTU: 517,
+                autoConnect: true,
+                timeout: 30000,
             });
             console.log(connectedDevice.mtu);
-            if (connectedDevice.mtu === 247) {
+            if (connectedDevice.mtu !== 27) {
                 console.log('request good');
             }
 
-            await manager.requestConnectionPriorityForDevice(id, 1, 'COM_TX');
+            await manager.requestConnectionPriorityForDevice(
+                id,
+                1,
+                'COM_SWEEP',
+            );
 
             await connectedDevice.discoverAllServicesAndCharacteristics();
             //check characteristics
             manager
                 .characteristicsForDevice(connectedDevice.id, ServiceUUIDs.VSP)
                 .then((characteristics) => {
-                    console.log('characteristics:');
-                    for (let i = 0; i < characteristics.length; i++) {
-                        console.log(characteristics[i].uuid);
-
-                        manager.stopDeviceScan();
-                        (globalThis as any).deviceID = id;
-                        (globalThis as any).deviceName = name;
-                        globalThis.screen_used = 0;
-                        navigation.navigate('DataScreen');
-                    }
+                    manager.stopDeviceScan();
+                    // console.log('characteristics:');
+                    // for (let i = 0; i < characteristics.length; i++) {
+                    // console.log(characteristics[i].uuid);
+                    // }
+                    (globalThis as any).deviceID = id;
+                    (globalThis as any).deviceName = name;
+                    globalThis.screen_used = 0;
+                    GetMeasurementsText();
+                    console.log('Connected');
+                    navigation.navigate('DataScreen');
                 })
                 .catch((err) => {
                     setDeviceCount('');

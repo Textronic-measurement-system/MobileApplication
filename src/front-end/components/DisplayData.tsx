@@ -16,6 +16,7 @@ export const DisplayData = function (): JSX.Element {
     const [COM_RES, setCOM_RES] = useState('');
     const [COM_IMP, setCOM_IMP] = useState('');
     const [COM_FRE, setCOM_FRE] = useState('');
+    const [COM_SWEEP, setCOM_SWEEP] = useState('');
 
     const handleReadCOM_TEM = async () => {
         try {
@@ -132,36 +133,87 @@ export const DisplayData = function (): JSX.Element {
             return false;
         }
     };
-    const ReadCharacteristic = async () => {
-        await handleReadCOM_TEM();
-        await handleReadCOM_RES();
-        await handleReadCOM_IMP();
-        await handleReadCOM_FRE();
+
+    const handleReadCOM_SWEEP = async () => {
+        try {
+            await manager.monitorCharacteristicForDevice(
+                id,
+                ServiceUUIDs.VSP,
+                CharacteristicsUUIDs.COM_SWEEP,
+                (error, characteristic) => {
+                    if (error) {
+                        console.log(error);
+                    }
+                    if (base64.decode(characteristic.value) === null) {
+                        setCOM_SWEEP({
+                            ...(COM_SWEEP as any),
+                            value: 0,
+                        });
+                    } else {
+                        setCOM_SWEEP({
+                            ...(COM_SWEEP as any),
+                            value: base64.decode(characteristic.value),
+                        });
+                    }
+                },
+                'COM_SWEEP',
+            );
+        } catch (e) {
+            return false;
+        }
     };
 
-    useEffect(() => {
+    const ReadCharacteristic = async () => {
+        // await handleReadCOM_TEM();
+        // await handleReadCOM_RES();
+        // await handleReadCOM_IMP();
+        // await handleReadCOM_FRE();
+        await handleReadCOM_SWEEP();
+        if ((COM_SWEEP as any).value !== 0) {
+            globalThis.Measurement_T = (COM_SWEEP as any).value;
+        }
+    };
+
+    /*useEffect(() => {
         const timerWrite = setTimeout(() => {
             ReadCharacteristic();
         }, 1);
         return () => clearTimeout(timerWrite);
-    }, []);
+    }, []);*/
 
     const DisplayTem = () => {
-        if ((COM_TEM as any).value === undefined) {
-            setCOM_TEM({
-                ...(COM_TEM as any),
-                value: 0,
-            });
+        if ((COM_SWEEP as any).value === undefined) {
+            if (globalThis.Measurement_T !== undefined) {
+                setCOM_SWEEP({
+                    ...(COM_SWEEP as any),
+                    value: globalThis.Measurement_T,
+                });
+            } else {
+                setCOM_SWEEP({
+                    ...(COM_SWEEP as any),
+                    value: 0,
+                });
+            }
         }
-        return '\n' + (COM_TEM as any).value;
+
+        return '\n' + (COM_SWEEP as any).value;
     };
 
     const DisplayRes = () => {
         if ((COM_RES as any).value === undefined) {
-            setCOM_RES({
-                ...(COM_RES as any),
-                value: 0,
-            });
+            if (globalThis.Measurement_R !== undefined) {
+                setCOM_RES({
+                    ...(COM_RES as any),
+                    value: globalThis.Measurement_R[
+                        globalThis.Measurement_R.length - 1
+                    ],
+                });
+            } else {
+                setCOM_RES({
+                    ...(COM_RES as any),
+                    value: 0,
+                });
+            }
         }
 
         return '\n' + (COM_RES as any).value;
@@ -169,10 +221,19 @@ export const DisplayData = function (): JSX.Element {
 
     const DisplayImp = () => {
         if ((COM_IMP as any).value === undefined) {
-            setCOM_IMP({
-                ...(COM_IMP as any),
-                value: 0,
-            });
+            if (globalThis.Measurement_X !== undefined) {
+                setCOM_IMP({
+                    ...(COM_IMP as any),
+                    value: globalThis.Measurement_X[
+                    globalThis.Measurement_X.length - 1
+                        ],
+                });
+            } else {
+                setCOM_IMP({
+                    ...(COM_IMP as any),
+                    value: 0,
+                });
+            }
         }
 
         return '\n' + (COM_IMP as any).value;
@@ -180,10 +241,19 @@ export const DisplayData = function (): JSX.Element {
 
     const DisplayFre = () => {
         if ((COM_FRE as any).value === undefined) {
-            setCOM_FRE({
-                ...(COM_FRE as any),
-                value: 0,
-            });
+            if (globalThis.Measurement_F !== undefined) {
+                setCOM_FRE({
+                    ...(COM_FRE as any),
+                    value: globalThis.Measurement_F[
+                    globalThis.Measurement_F.length - 1
+                        ],
+                });
+            } else {
+                setCOM_FRE({
+                    ...(COM_FRE as any),
+                    value: 0,
+                });
+            }
         }
 
         return '\n' + (COM_FRE as any).value;

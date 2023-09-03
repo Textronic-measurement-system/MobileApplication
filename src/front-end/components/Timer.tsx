@@ -1,12 +1,38 @@
 export const CurrentDate = () => {
-    var date = new Date().getDate(); //Current Date
-    var month = new Date().getMonth() + 1; //Current Month
-    var year = new Date().getFullYear(); //Current Year
-    var hours = new Date().getHours(); //Current Hours
-    var min = new Date().getMinutes(); //Current Minutes
-    var sec = new Date().getSeconds(); //Current Seconds
+    var day = new Date().getDate();
+    var month = new Date().getMonth() + 1;
+    var year = new Date().getFullYear();
+    var hours = new Date().getHours();
+    var min = new Date().getMinutes();
+    var sec = new Date().getSeconds();
 
     console.log(
-        date + '.' + month + '.' + year + ' ' + hours + ':' + min + ':' + sec,
+        'Time: ',
+        year +
+            '-' +
+            month +
+            '-' +
+            day +
+            'T' +
+            hours +
+            ':' +
+            min +
+            ':' +
+            sec +
+            '.000Z',
+    );
+    return (
+        year +
+        '-' +
+        month +
+        '-' +
+        day +
+        'T' +
+        hours +
+        ':' +
+        min +
+        ':' +
+        sec +
+        '.000Z'
     );
 };

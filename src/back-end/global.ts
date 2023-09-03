@@ -10,6 +10,7 @@ declare global {
     var Measurement_R: string;
     var Measurement_X: string;
     var Measurement_F: string;
+    var BLE_Sweep: string;
 }
 
 export {};

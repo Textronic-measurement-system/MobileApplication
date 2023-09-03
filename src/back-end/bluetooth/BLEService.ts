@@ -23,6 +23,7 @@ export enum CharacteristicsUUIDs {
     COM_RES = '0000FF03-0000-1000-8000-00805F9B34FB',
     COM_IMP = '0000FF04-0000-1000-8000-00805F9B34FB',
     COM_FRE = '0000FF05-0000-1000-8000-00805F9B34FB',
+    COM_SWEEP = '0000FF06-0000-1000-8000-00805F9B34FB',
 }
 
 export const getBluetoothState = async (): Promise<State> => {

@@ -2,7 +2,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { ImageBackground, View } from 'react-native';
 import { Button, NativeBaseProvider, Text } from 'native-base';
-
 import { welcomeScreen } from './style/WelcomeScreenStyle';
 
 export const WelcomeScreen = function ({ navigation }: any): JSX.Element {
@@ -14,9 +13,7 @@ export const WelcomeScreen = function ({ navigation }: any): JSX.Element {
                 style={welcomeScreen.picture}
                 source={require('../pictures/logo_wallpaper.png')}>
                 <View style={welcomeScreen.container}>
-                    <Button
-                        style={welcomeScreen.button}
-                        onPress={() => navigation.navigate('DevicesList')}>
+                    <Button style={welcomeScreen.button} onPress={() => navigation.navigate('DevicesList')}>
                         <Text style={welcomeScreen.button_text}>
                             {t('WelcomeScreen.button')}
                         </Text>

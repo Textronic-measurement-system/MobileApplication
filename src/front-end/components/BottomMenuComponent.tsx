@@ -3,7 +3,6 @@ import { Button, Center, HStack, Text, View } from 'native-base';
 import { bottom_menuComponent } from './style/BottomMenuStyle';
 import { manager } from '../../back-end/bluetooth/BLEService';
 import { useTranslation } from 'react-i18next';
-import { CurrentDate } from './Timer';
 
 interface Props {
     navigation: any;
@@ -23,17 +22,9 @@ export const BottomMenuComponent = function ({
         handleDisconnectDevice();
     };
 
-    const StopTransferBTData = () => {
-        manager.cancelTransaction('COM_TEM');
-        manager.cancelTransaction('COM_RES');
-        manager.cancelTransaction('COM_IMP');
-        manager.cancelTransaction('COM_FRE');
-    };
-
     const ButtonOne = () => {
         globalThis.screen_used = 0;
         navigation.navigate('DataScreen');
-        console.log(CurrentDate());
     };
 
     const ButtonTwo = () => {
@@ -43,7 +34,6 @@ export const BottomMenuComponent = function ({
 
     const ButtonThree = () => {
         globalThis.screen_used = 2;
-        StopTransferBTData();
         navigation.navigate('SettingsScreen');
     };
 
