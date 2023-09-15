@@ -10,6 +10,7 @@ import {
 import { GetBLEMeasurementsText } from '../../back-end/GetBLEMeasurement';
 import { GetMeasurementsText } from '../../back-end/GetMeasurements';
 import { AddMeasurements } from '../../back-end/AddMeasurement';
+import { DeviceId } from 'react-native-ble-plx';
 
 export const DisplayData = function (): JSX.Element {
     const { t } = useTranslation();
@@ -54,6 +55,7 @@ export const DisplayData = function (): JSX.Element {
                         ...(COM_SWEEP as any),
                         value: base64.decode(characteristic.value),
                     });
+                    console.log("I'm here");
                 },
                 'COM_SWEEP',
             );
@@ -62,35 +64,80 @@ export const DisplayData = function (): JSX.Element {
         }
     };
 
-    const ReadCharacteristic = async () => {
+    const Timer = () => {
         if (count >= 1000000) {
             setCount(0);
         } else {
             setCount(count + 1);
         }
+    };
 
-        await handleReadCOM_SWEEP();
-        console.log(COM_SWEEP);
-        await manager.cancelDeviceConnection((globalThis as any).deviceID);
+    const WriteDataToDB = () => {
+        AddMeasurements(globalThis.BLE_Sweep);
         GetMeasurementsText();
         console.log('Measured');
+        globalThis.connection_flag = 0;
+    };
+
+    const ReadBT = () => {
+        GetBLEMeasurementsText();
+        globalThis.connection_flag = 2;
+    };
+
+    const DeviceConnection = async (id: DeviceId) => {
+        try {
+            manager.stopDeviceScan();
+            await manager.connectedDevices([ServiceUUIDs.VSP]);
+
+            const connectedDevice = await manager.connectToDevice(id, {
+                requestMTU: 517,
+            });
+            console.log(connectedDevice.mtu);
+            if (connectedDevice.mtu !== 27) {
+                console.log('request good');
+            }
+
+            await manager.requestConnectionPriorityForDevice(
+                id,
+                1,
+                'COM_SWEEP',
+            );
+
+            await connectedDevice.discoverAllServicesAndCharacteristics();
+            manager
+                .characteristicsForDevice(connectedDevice.id, ServiceUUIDs.VSP)
+                .then(() => {
+                    manager.stopDeviceScan();
+                    console.log('Connected');
+                    globalThis.connection_flag = 1;
+                })
+                .catch((err) => {
+                    console.log('There was an error:' + err);
+                    return;
+                });
+        } catch (e) {
+            console.log(e);
+        }
     };
 
     const Reconnection = async () => {
-        await manager.connectToDevice(globalThis.deviceID, {
-            requestMTU: 517,
-        });
-        console.log('Connected ' + globalThis.deviceID);
+        await DeviceConnection(globalThis.deviceID);
     };
 
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         ReadCharacteristic();
-    //     }, 10000);
-    //     setTimeout(() => {
-    //         Reconnection();
-    //     }, 10000);
-    // }, [count]);
+    useEffect(() => {
+        setTimeout(() => {
+            Timer();
+        }, 5000);
+        setTimeout(() => {
+            if (globalThis.connection_flag === 0) {
+                Reconnection();
+            } else if (globalThis.connection_flag === 1) {
+                ReadBT();
+            } else if (globalThis.connection_flag === 2) {
+                WriteDataToDB();
+            }
+        }, 5000);
+    }, [count]);
 
     const DisplayTem = () => {
         if ((COM_TEM as any).value === undefined) {

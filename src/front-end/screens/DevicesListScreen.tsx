@@ -104,6 +104,7 @@ export const DevicesList = function ({ navigation }: any): JSX.Element {
                     globalThis.screen_used = 0;
                     GetMeasurementsText();
                     console.log('Connected');
+                    globalThis.connection_flag = 1;
                     navigation.navigate('DataScreen');
                 })
                 .catch((err) => {

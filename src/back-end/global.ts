@@ -11,6 +11,7 @@ declare global {
     var Measurement_X: string;
     var Measurement_F: string;
     var BLE_Sweep: string;
+    var connection_flag: number;
 }
 
 export {};

@@ -7,7 +7,8 @@ import { BottomMenuComponent } from '../components/BottomMenuComponent';
 import { GetMeasurementsText } from '../../back-end/GetMeasurements';
 import { GetBLEMeasurementsText } from '../../back-end/GetBLEMeasurement';
 import { AddMeasurements } from '../../back-end/AddMeasurement';
-import { manager } from '../../back-end/bluetooth/BLEService';
+import { manager, ServiceUUIDs } from '../../back-end/bluetooth/BLEService';
+import { DeviceId } from 'react-native-ble-plx';
 
 export const SettingsScreen = function ({ navigation }: any): JSX.Element {
     const { t } = useTranslation();
@@ -16,10 +17,43 @@ export const SettingsScreen = function ({ navigation }: any): JSX.Element {
         await manager.cancelDeviceConnection(globalThis.deviceID);
     };
 
+    const DeviceConnection = async (id: DeviceId) => {
+        try {
+            manager.stopDeviceScan();
+            await manager.connectedDevices([ServiceUUIDs.VSP]);
+
+            const connectedDevice = await manager.connectToDevice(id, {
+                requestMTU: 517,
+            });
+            console.log(connectedDevice.mtu);
+            if (connectedDevice.mtu !== 27) {
+                console.log('request good');
+            }
+
+            await manager.requestConnectionPriorityForDevice(
+                id,
+                1,
+                'COM_SWEEP',
+            );
+
+            await connectedDevice.discoverAllServicesAndCharacteristics();
+            manager
+                .characteristicsForDevice(connectedDevice.id, ServiceUUIDs.VSP)
+                .then(() => {
+                    manager.stopDeviceScan();
+                    console.log('Connected');
+                })
+                .catch((err) => {
+                    console.log('There was an error:' + err);
+                    return;
+                });
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
     const Reconnection = async () => {
-        await manager.connectToDevice(globalThis.deviceID, {
-            requestMTU: 498,
-        });
+        await DeviceConnection(globalThis.deviceID);
     };
 
     return (
