@@ -26,5 +26,9 @@
         "frequency": "Frequency",
         "time": "Time",
         "frequency_meas": "Frequency [Hz]"
+    },
+    "SettingsScreen": {
+        "setup_chart": "Zero as the beginning of the chart",
+        "number_measurement": "Numbers of measurements displayed"
     }
 }

@@ -1,95 +1,92 @@
-import React from 'react';
-import { Box, Button, NativeBaseProvider, View, VStack } from 'native-base';
+import React, { useEffect, useState } from 'react';
+import {
+    Box,
+    NativeBaseProvider,
+    Slider,
+    Stack,
+    View,
+    Text,
+    HStack,
+} from 'native-base';
+import { Switch } from 'react-native';
 import { dataScreen } from './style/DataScreenStyle';
 import { Header } from '../components/Header';
 import { useTranslation } from 'react-i18next';
 import { BottomMenuComponent } from '../components/BottomMenuComponent';
-import { GetMeasurementsText } from '../../back-end/GetMeasurements';
-import { GetBLEMeasurementsText } from '../../back-end/GetBLEMeasurement';
-import { AddMeasurements } from '../../back-end/AddMeasurement';
-import { manager, ServiceUUIDs } from '../../back-end/bluetooth/BLEService';
-import { DeviceId } from 'react-native-ble-plx';
 
 export const SettingsScreen = function ({ navigation }: any): JSX.Element {
     const { t } = useTranslation();
+    const [onChangeEndValue, setOnChangeEndValue] = React.useState();
+    const [isEnabledZero, setIsEnabledZero] = useState(
+        globalThis.chart_from_zero,
+    );
 
-    const Disconnect = async () => {
-        await manager.cancelDeviceConnection(globalThis.deviceID);
+    const toggleSwitchZero = () => {
+        if (globalThis.chart_from_zero === true) {
+            globalThis.chart_from_zero = false;
+        } else {
+            globalThis.chart_from_zero = true;
+        }
+        setIsEnabledZero((previousState) => !previousState);
     };
 
-    const DeviceConnection = async (id: DeviceId) => {
-        try {
-            manager.stopDeviceScan();
-            await manager.connectedDevices([ServiceUUIDs.VSP]);
-
-            const connectedDevice = await manager.connectToDevice(id, {
-                requestMTU: 517,
-            });
-            console.log(connectedDevice.mtu);
-            if (connectedDevice.mtu !== 27) {
-                console.log('request good');
-            }
-
-            await manager.requestConnectionPriorityForDevice(
-                id,
-                1,
-                'COM_SWEEP',
-            );
-
-            await connectedDevice.discoverAllServicesAndCharacteristics();
-            manager
-                .characteristicsForDevice(connectedDevice.id, ServiceUUIDs.VSP)
-                .then(() => {
-                    manager.stopDeviceScan();
-                    console.log('Connected');
-                })
-                .catch((err) => {
-                    console.log('There was an error:' + err);
-                    return;
-                });
-        } catch (e) {
-            console.log(e);
+    const prepareSpeed = (number: number) => {
+        if (number !== undefined) {
+            globalThis.numbers_of_measurements = number;
         }
     };
 
-    const Reconnection = async () => {
-        await DeviceConnection(globalThis.deviceID);
-    };
-
-    const ParseBTData = () => {
-        const jsonData = JSON.parse(globalThis.BLE_Sweep);
-        console.log('Parse Data: ' + jsonData.F);
-    };
+    useEffect(() => {
+        prepareSpeed(onChangeEndValue);
+    }, [onChangeEndValue]);
 
     return (
         <NativeBaseProvider>
             <View style={dataScreen.container}>
                 <Header title={t('ScreenNames.settings')} />
                 <Box style={dataScreen.box}>
-                    <VStack space={5} marginTop={5}>
-                        <Button
-                            onPress={GetMeasurementsText}
-                            colorScheme={'pink'}>
-                            Get DB Data
-                        </Button>
-                        <Button onPress={GetBLEMeasurementsText}>
-                            Get BT Data
-                        </Button>
-                        <Button
-                            onPress={AddMeasurements}
-                            colorScheme={'purple'}>
-                            Add Data
-                        </Button>
-                        <Button onPress={Reconnection} colorScheme={'green'}>
-                            Reconnect
-                        </Button>
-                        <Button onPress={Disconnect} colorScheme={'yellow'}>
-                            Disconnect
-                        </Button>
-                        <Button onPress={ParseBTData} colorScheme={'yellow'}>
-                            Parse
-                        </Button>
-                    </VStack>
+                    <HStack style={dataScreen.switch_stack} space={5}>
+                        <Switch
+                            trackColor={{
+                                false: '#767577',
+                                true: '#00a354',
+                            }}
+                            thumbColor={isEnabledZero ? '#ffffff' : '#ffffff'}
+                            onValueChange={toggleSwitchZero}
+                            value={globalThis.chart_from_zero}
+                        />
+                        <Text style={dataScreen.text}>
+                            {t('SettingsScreen.setup_chart')}
+                        </Text>
+                    </HStack>
+                    <Stack
+                        space={1}
+                        alignItems="center"
+                        w="75%"
+                        maxW="300"
+                        marginTop={'5%'}>
+                        <Text style={dataScreen.text}>
+                            {t('SettingsScreen.number_measurement') +
+                                ': ' +
+                                globalThis.numbers_of_measurements}
+                        </Text>
+                        <Slider
+                            defaultValue={globalThis.numbers_of_measurements}
+                            maxValue={20}
+                            minValue={1}
+                            colorScheme="green"
+                            onChange={(v) => {
+                                prepareSpeed(v);
+                            }}
+                            onChangeEnd={(v) => {
+                                v && setOnChangeEndValue(Math.floor(v));
+                            }}>
+                            <Slider.Track>
+                                <Slider.FilledTrack />
+                            </Slider.Track>
+                            <Slider.Thumb />
+                        </Slider>
+                    </Stack>
                 </Box>
                 <BottomMenuComponent navigation={navigation} />
             </View>

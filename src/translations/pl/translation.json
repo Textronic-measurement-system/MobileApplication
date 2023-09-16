@@ -26,6 +26,10 @@
         "frequency": "Częstotliwość"
         "time": "Czas",
         "frequency_meas": "Częstotliwość [Hz]"
+    },
+    "SettingsScreen": {
+        "setup_chart": "Zero jako początek wykresu",
+        "number_measurement": "Liczba wyświetlanych pomiarów"
     }
 }*/
 {
@@ -56,5 +60,9 @@
         "frequency": "Frequency",
         "time": "Time",
         "frequency_meas": "Frequency [Hz]"
+    },
+    "SettingsScreen": {
+        "setup_chart": "Zero as the beginning of the chart",
+        "number_measurement": "Numbers of measurements displayed"
     }
 }

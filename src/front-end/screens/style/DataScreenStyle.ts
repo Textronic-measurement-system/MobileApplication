@@ -34,4 +34,11 @@ export const dataScreen = StyleSheet.create({
         fontSize: 20,
         top: '11%',
     },
+    text: {
+        fontSize: 15,
+        top: '1%',
+    },
+    switch_stack: {
+        marginTop: '5%',
+    },
 });
