@@ -47,6 +47,9 @@ export const DataScreen = function ({ navigation }: any): JSX.Element {
                         isEnabledImp={isEnabledImp}
                         isEnabledFre={isEnabledFre}
                     />
+                    <Text style={dataScreen.labelOX_time}>
+                        {t('DataScreen.time')}
+                    </Text>
                     <VStack space={'4%'} style={dataScreen.legend}>
                         <HStack space={'10%'}>
                             <CircleIcon size="5" color={'rgb(218,16,16)'} />

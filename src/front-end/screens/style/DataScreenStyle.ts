@@ -24,4 +24,14 @@ export const dataScreen = StyleSheet.create({
     legendTest: {
         fontSize: 16,
     },
+    labelOX_time: {
+        fontWeight: 'bold',
+        fontSize: 20,
+        top: '10%',
+    },
+    labelOX_frequency: {
+        fontWeight: 'bold',
+        fontSize: 20,
+        top: '11%',
+    },
 });

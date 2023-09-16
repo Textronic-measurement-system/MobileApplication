@@ -37,6 +37,9 @@ export const FrequencyScreen = function ({ navigation }: any): JSX.Element {
                         isEnabledRes={isEnabledRes}
                         isEnabledImp={isEnabledImp}
                     />
+                    <Text style={dataScreen.labelOX_frequency}>
+                        {t('DataScreen.frequency_meas')}
+                    </Text>
                     <VStack space={'4%'} style={dataScreen.legend}>
                         <HStack space={'10%'}>
                             <CircleIcon size="5" color={'rgb(197,18,215)'} />

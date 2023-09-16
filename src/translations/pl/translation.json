@@ -24,6 +24,8 @@
         "resistance": "Rezystancja",
         "impedance": "Impedancja",
         "frequency": "Częstotliwość"
+        "time": "Czas",
+        "frequency_meas": "Częstotliwość [Hz]"
     }
 }*/
 {
@@ -51,6 +53,8 @@
         "temperature": "Temperature",
         "resistance": "Resistance",
         "impedance": "Impedance",
-        "frequency": "Frequency"
+        "frequency": "Frequency",
+        "time": "Time",
+        "frequency_meas": "Frequency [Hz]"
     }
 }
