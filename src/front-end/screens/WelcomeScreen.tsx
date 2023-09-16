@@ -13,7 +13,9 @@ export const WelcomeScreen = function ({ navigation }: any): JSX.Element {
                 style={welcomeScreen.picture}
                 source={require('../pictures/logo_wallpaper.png')}>
                 <View style={welcomeScreen.container}>
-                    <Button style={welcomeScreen.button} onPress={() => navigation.navigate('DevicesList')}>
+                    <Button
+                        style={welcomeScreen.button}
+                        onPress={() => navigation.navigate('DevicesList')}>
                         <Text style={welcomeScreen.button_text}>
                             {t('WelcomeScreen.button')}
                         </Text>

@@ -5,7 +5,7 @@ import { Box, Center, FlatList, NativeBaseProvider, View } from 'native-base';
 import { DeviceButton } from '../components/DeviceButton';
 import { devices_listScreen } from './style/DevicesListScreenStyle';
 
-import { ConnectionPriority, Device, DeviceId } from 'react-native-ble-plx';
+import { Device, DeviceId } from 'react-native-ble-plx';
 import { requestPermission } from '../../back-end/bluetooth/BLEFunctions';
 import { manager, ServiceUUIDs } from '../../back-end/bluetooth/BLEService';
 import { SearchHeader } from '../components/SearchHeader';
@@ -90,19 +90,16 @@ export const DevicesList = function ({ navigation }: any): JSX.Element {
             );
 
             await connectedDevice.discoverAllServicesAndCharacteristics();
-            //check characteristics
+
+            GetMeasurementsText();
+
             manager
                 .characteristicsForDevice(connectedDevice.id, ServiceUUIDs.VSP)
-                .then((characteristics) => {
+                .then(() => {
                     manager.stopDeviceScan();
-                    // console.log('characteristics:');
-                    // for (let i = 0; i < characteristics.length; i++) {
-                    // console.log(characteristics[i].uuid);
-                    // }
                     (globalThis as any).deviceID = id;
                     (globalThis as any).deviceName = name;
                     globalThis.screen_used = 0;
-                    GetMeasurementsText();
                     console.log('Connected');
                     globalThis.connection_flag = 1;
                     navigation.navigate('DataScreen');

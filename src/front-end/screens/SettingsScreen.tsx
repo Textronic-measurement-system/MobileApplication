@@ -56,6 +56,11 @@ export const SettingsScreen = function ({ navigation }: any): JSX.Element {
         await DeviceConnection(globalThis.deviceID);
     };
 
+    const ParseBTData = () => {
+        const jsonData = JSON.parse(globalThis.BLE_Sweep);
+        console.log('Parse Data: ' + jsonData.F);
+    };
+
     return (
         <NativeBaseProvider>
             <View style={dataScreen.container}>
@@ -80,6 +85,9 @@ export const SettingsScreen = function ({ navigation }: any): JSX.Element {
                         </Button>
                         <Button onPress={Disconnect} colorScheme={'yellow'}>
                             Disconnect
+                        </Button>
+                        <Button onPress={ParseBTData} colorScheme={'yellow'}>
+                            Parse
                         </Button>
                     </VStack>
                 </Box>

@@ -1,12 +1,8 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Center, HStack, NativeBaseProvider, Text, View } from 'native-base';
 import { displayDataComponent } from './style/DisplayDataStyle';
-import {
-    manager,
-    ServiceUUIDs,
-    CharacteristicsUUIDs,
-} from '../../back-end/bluetooth/BLEService';
+import { manager, ServiceUUIDs } from '../../back-end/bluetooth/BLEService';
 import { GetBLEMeasurementsText } from '../../back-end/GetBLEMeasurement';
 import { GetMeasurementsText } from '../../back-end/GetMeasurements';
 import { AddMeasurements } from '../../back-end/AddMeasurement';
@@ -14,8 +10,6 @@ import { DeviceId } from 'react-native-ble-plx';
 
 export const DisplayData = function (): JSX.Element {
     const { t } = useTranslation();
-    const id = globalThis.deviceID;
-    const base64 = require('base-64');
 
     const [count, setCount] = useState(0);
 
@@ -39,30 +33,6 @@ export const DisplayData = function (): JSX.Element {
             ? '0'
             : globalThis.Measurement_F[globalThis.Measurement_F.length - 1],
     );
-    const [COM_SWEEP, setCOM_SWEEP] = useState('');
-
-    const handleReadCOM_SWEEP = async () => {
-        try {
-            await manager.monitorCharacteristicForDevice(
-                id,
-                ServiceUUIDs.VSP,
-                CharacteristicsUUIDs.COM_SWEEP,
-                (error, characteristic) => {
-                    if (error) {
-                        console.log(error);
-                    }
-                    setCOM_SWEEP({
-                        ...(COM_SWEEP as any),
-                        value: base64.decode(characteristic.value),
-                    });
-                    console.log("I'm here");
-                },
-                'COM_SWEEP',
-            );
-        } catch (e) {
-            return false;
-        }
-    };
 
     const Timer = () => {
         if (count >= 1000000) {
@@ -75,6 +45,10 @@ export const DisplayData = function (): JSX.Element {
     const WriteDataToDB = () => {
         AddMeasurements(globalThis.BLE_Sweep);
         GetMeasurementsText();
+        DisplayTem();
+        DisplayRes();
+        DisplayImp();
+        DisplayFre();
         console.log('Measured');
         globalThis.connection_flag = 0;
     };
@@ -128,15 +102,17 @@ export const DisplayData = function (): JSX.Element {
         setTimeout(() => {
             Timer();
         }, 5000);
-        setTimeout(() => {
-            if (globalThis.connection_flag === 0) {
-                Reconnection();
-            } else if (globalThis.connection_flag === 1) {
-                ReadBT();
-            } else if (globalThis.connection_flag === 2) {
-                WriteDataToDB();
-            }
-        }, 5000);
+        if (/*globalThis.screen_used === 0 ||*/ globalThis.screen_used === 1) {
+            setTimeout(() => {
+                if (globalThis.connection_flag === 0) {
+                    Reconnection();
+                } else if (globalThis.connection_flag === 1) {
+                    ReadBT();
+                } else if (globalThis.connection_flag === 2) {
+                    WriteDataToDB();
+                }
+            }, 5000);
+        }
     }, [count]);
 
     const DisplayTem = () => {
@@ -225,20 +201,20 @@ export const DisplayData = function (): JSX.Element {
                 <Center>
                     <HStack style={displayDataComponent.column} space={'3%'}>
                         <Text style={displayDataComponent.text}>
-                            {t('DataScreen.temperature')}
-                            {DisplayTem()}
+                            {t('DataScreen.temperature') + '\n'}
+                            {(COM_TEM as any).value}
                         </Text>
                         <Text style={displayDataComponent.text}>
-                            {t('DataScreen.resistance')}
-                            {DisplayRes()}
+                            {t('DataScreen.resistance') + '\n'}
+                            {(COM_RES as any).value}
                         </Text>
                         <Text style={displayDataComponent.text}>
-                            {t('DataScreen.impedance')}
-                            {DisplayImp()}
+                            {t('DataScreen.impedance') + '\n'}
+                            {(COM_IMP as any).value}
                         </Text>
                         <Text style={displayDataComponent.text}>
-                            {t('DataScreen.frequency')}
-                            {DisplayFre()}
+                            {t('DataScreen.frequency') + '\n'}
+                            {(COM_FRE as any).value}
                         </Text>
                     </HStack>
                 </Center>
