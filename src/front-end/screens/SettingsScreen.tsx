@@ -27,6 +27,7 @@ export const SettingsScreen = function ({ navigation }: any): JSX.Element {
         } else {
             globalThis.chart_from_zero = true;
         }
+        console.log(globalThis.chart_from_zero);
         setIsEnabledZero((previousState) => !previousState);
     };
 

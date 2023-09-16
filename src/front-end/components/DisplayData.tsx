@@ -102,7 +102,7 @@ export const DisplayData = function (): JSX.Element {
         setTimeout(() => {
             Timer();
         }, 5000);
-        if (/*globalThis.screen_used === 0 ||*/ globalThis.screen_used === 4) {
+        if (globalThis.screen_used === 0 || globalThis.screen_used === 1) {
             setTimeout(() => {
                 if (globalThis.connection_flag === 0) {
                     Reconnection();

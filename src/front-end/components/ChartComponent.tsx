@@ -21,32 +21,34 @@ export const ChartComponent = function ({
     const [dataIMP, setDataIMP] = useState([]);
     const [dataFRE, setDataFRE] = useState([]);
 
+    const temperature = [
+        22.5, 22.4, 22.1, 21.9, 22.2, 21.9, 22.3, 22.4, 22.3, 22.5, 22.4, 22.3,
+        22.1, 21.9, 22.1, 22, 22.3, 22.4, 22.5, 22.4,
+    ];
+
     useEffect(() => {
         checkSwitches();
     }, [isEnabledTem, isEnabledRes, isEnabledImp, isEnabledFre]);
 
     const checkSwitches = () => {
         if (isEnabledTem) {
-            setDataTEM([
-                22.5, 22.4, 22.1, 21.9, 22.2, 21.9, 22.3, 22.4, 22.3, 22.5,
-                22.4, 22.3, 22.1, 21.9, 22.1, 22, 22.3, 22.4, 22.5, 22.4,
-            ]);
+            setDataTEM(temperature.slice(20 - globalThis.numbers_of_measurements));
         } else {
             setDataTEM([]);
         }
 
         if (isEnabledRes) {
-            setDataRES(globalThis.Measurement_R);
+            setDataRES(globalThis.Measurement_R.slice(20 - globalThis.numbers_of_measurements));
         } else {
             setDataRES([]);
         }
         if (isEnabledImp) {
-            setDataIMP(globalThis.Measurement_X);
+            setDataIMP(globalThis.Measurement_X.slice(20 - globalThis.numbers_of_measurements));
         } else {
             setDataIMP([]);
         }
         if (isEnabledFre) {
-            setDataFRE(globalThis.Measurement_F);
+            setDataFRE(globalThis.Measurement_F.slice(20 - globalThis.numbers_of_measurements));
         } else {
             setDataFRE([]);
         }

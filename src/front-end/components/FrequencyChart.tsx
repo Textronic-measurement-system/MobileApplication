@@ -15,54 +15,62 @@ export const FrequencyChart = function ({
     const [dataRES, setDataRES] = useState([]);
     const [dataIMP, setDataIMP] = useState([]);
 
+    const labelOX = [
+        '50',
+        '100',
+        '150',
+        '200',
+        '250',
+        '300',
+        '350',
+        '400',
+        '450',
+        '500',
+        '550',
+        '600',
+        '650',
+        '700',
+        '750',
+        '800',
+        '850',
+        '900',
+        '950',
+        '1000',
+    ];
+
     useEffect(() => {
         checkSwitches();
     }, [isEnabledRes, isEnabledImp]);
 
     const checkSwitches = () => {
         if (isEnabledRes) {
-            setDataRES(globalThis.Measurement_R);
+            setDataRES(
+                globalThis.Measurement_R.slice(
+                    20 - globalThis.numbers_of_measurements,
+                ),
+            );
         } else {
             setDataRES([]);
         }
         if (isEnabledImp) {
-            setDataIMP(globalThis.Measurement_X);
+            setDataIMP(
+                globalThis.Measurement_X.slice(
+                    20 - globalThis.numbers_of_measurements,
+                ),
+            );
         } else {
             setDataIMP([]);
         }
     };
 
     const changeDecimalPlaces = () => {
-        if (
-            isEnabledRes === false &&
-            isEnabledImp === true
-        ) {
+        if (isEnabledRes === false && isEnabledImp === true) {
             return (
                 <LineChart
                     data={{
-                        labels: [
-                            '0',
-                            '50',
-                            '100',
-                            '150',
-                            '200',
-                            '250',
-                            '300',
-                            '350',
-                            '400',
-                            '450',
-                            '500',
-                            '550',
-                            '600',
-                            '650',
-                            '700',
-                            '750',
-                            '800',
-                            '850',
-                            '900',
-                            '950',
-                            '1000',
-                        ],
+                        labels: labelOX.slice(
+                            20 - globalThis.numbers_of_measurements,
+                        ),
                         datasets: [
                             {
                                 data: dataRES,
@@ -101,29 +109,9 @@ export const FrequencyChart = function ({
             return (
                 <LineChart
                     data={{
-                        labels: [
-                            '0',
-                            '50',
-                            '100',
-                            '150',
-                            '200',
-                            '250',
-                            '300',
-                            '350',
-                            '400',
-                            '450',
-                            '500',
-                            '550',
-                            '600',
-                            '650',
-                            '700',
-                            '750',
-                            '800',
-                            '850',
-                            '900',
-                            '950',
-                            '1000',
-                        ],
+                        labels: labelOX.slice(
+                            20 - globalThis.numbers_of_measurements,
+                        ),
                         datasets: [
                             {
                                 data: dataRES,
@@ -160,9 +148,5 @@ export const FrequencyChart = function ({
         }
     };
 
-    return (
-        <NativeBaseProvider>
-            {changeDecimalPlaces()}
-        </NativeBaseProvider>
-    );
+    return <NativeBaseProvider>{changeDecimalPlaces()}</NativeBaseProvider>;
 };

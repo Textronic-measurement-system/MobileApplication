@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, Center, FlatList, NativeBaseProvider, View } from 'native-base';
+import {
+    Box,
+    Center,
+    FlatList,
+    NativeBaseProvider,
+    View,
+} from 'native-base';
 
 import { DeviceButton } from '../components/DeviceButton';
 import { devices_listScreen } from './style/DevicesListScreenStyle';
-
 import { Device, DeviceId } from 'react-native-ble-plx';
 import { requestPermission } from '../../back-end/bluetooth/BLEFunctions';
 import { manager, ServiceUUIDs } from '../../back-end/bluetooth/BLEService';
 import { SearchHeader } from '../components/SearchHeader';
 import { GetMeasurementsText } from '../../back-end/GetMeasurements';
-import { numbers_of_measurements } from '../../back-end/global';
 
 export const DevicesList = function ({ navigation }: any): JSX.Element {
     const { t } = useTranslation();
