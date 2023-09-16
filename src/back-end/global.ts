@@ -12,6 +12,8 @@ declare global {
     var Measurement_F: string;
     var BLE_Sweep: string;
     var connection_flag: number;
+    var chart_from_zero: boolean;
+    var numbers_of_measurements: number;
 }
 
 export {};

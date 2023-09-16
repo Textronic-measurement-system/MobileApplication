@@ -10,6 +10,7 @@ import { requestPermission } from '../../back-end/bluetooth/BLEFunctions';
 import { manager, ServiceUUIDs } from '../../back-end/bluetooth/BLEService';
 import { SearchHeader } from '../components/SearchHeader';
 import { GetMeasurementsText } from '../../back-end/GetMeasurements';
+import { numbers_of_measurements } from '../../back-end/global';
 
 export const DevicesList = function ({ navigation }: any): JSX.Element {
     const { t } = useTranslation();
@@ -99,9 +100,19 @@ export const DevicesList = function ({ navigation }: any): JSX.Element {
                     manager.stopDeviceScan();
                     (globalThis as any).deviceID = id;
                     (globalThis as any).deviceName = name;
-                    globalThis.screen_used = 0;
                     console.log('Connected');
+
+                    globalThis.screen_used = 0;
                     globalThis.connection_flag = 1;
+
+                    if (globalThis.chart_from_zero === undefined) {
+                        globalThis.chart_from_zero = true;
+                    }
+
+                    if (globalThis.numbers_of_measurements === undefined) {
+                        globalThis.numbers_of_measurements = 20;
+                    }
+
                     navigation.navigate('DataScreen');
                 })
                 .catch((err) => {
